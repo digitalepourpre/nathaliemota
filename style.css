@@ -8,3 +8,115 @@ Version: 1.0
 Tags: photographie
 Text Domain: nathaliemota
 */
+
+/***************** FONTS ***************/
+
+@font-face {
+    font-family: 'space-mono';
+    src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-BoldItalic.woff') format("woff2");
+    font-display: swap;
+    font-style: italic;
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'space-mono';
+    src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-Italic.woff') format("woff2");
+    font-display: swap;
+    font-style: italic;
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'space-mono';
+    src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-Regular.woff') format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'poppins';
+    src: url('wp-content/themes/nathaliemota/assets/fonts/Poppins-Light.woff') format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 300;
+  }
+
+  h1 {
+    font-family: 'space-mono';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 96px;
+    color: black;
+    display: none;
+  }
+  h2 {
+    font-family: 'space-mono';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 66px;
+    color: black;
+  }
+  h3 {
+    font-family: 'space-mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: black;
+  }
+  p {
+    font-family: 'poppins';
+    font-weight: 300;
+    font-style: normal;
+    font-size: 14px;
+    color: black;
+  }
+
+/***************** HEADER ***************/
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 31px 146px 31px 146px;
+}
+
+#menu-header {
+    display: flex;
+}
+
+.logo {
+    width: 216px;
+    height: 14px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-family: 'space-mono';
+}
+
+.navigation-header {
+    min-width: 30%;
+}
+
+ul {
+    list-style-type: none;
+    justify-content: space-between;
+  }
+
+/***************** FOOTER ***************/
+
+.site__footer {
+    display: flex;
+    justify-content: space-around;
+}
+.site__footer p {
+    font-size: 16px;
+}
+
+#menu-footer {
+    display: flex;
+}
+
+.navigation-footer {
+    min-width: 45%;
+}
