@@ -13,28 +13,28 @@ Text Domain: nathaliemota
 
 @font-face {
     font-family: 'space-mono';
-    src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-BoldItalic.woff') format("woff2");
+    src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-BoldItalic.ttf');
     font-display: swap;
     font-style: italic;
     font-weight: 700;
   }
   @font-face {
     font-family: 'space-mono';
-    src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-Italic.woff') format("woff2");
+    src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-Italic.ttf');
     font-display: swap;
     font-style: italic;
     font-weight: 400;
   }
   @font-face {
     font-family: 'space-mono';
-    src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-Regular.woff') format("woff2");
+    src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-Regular.ttf');
     font-display: swap;
     font-style: normal;
     font-weight: 400;
   }
   @font-face {
     font-family: 'poppins';
-    src: url('wp-content/themes/nathaliemota/assets/fonts/Poppins-Light.woff') format("woff2");
+    src: url('wp-content/themes/nathaliemota/assets/fonts/Poppins-Regular.ttf');
     font-display: swap;
     font-style: normal;
     font-weight: 300;
@@ -103,12 +103,15 @@ ul {
     justify-content: space-between;
   }
 
+
 /***************** FOOTER ***************/
 
 .site__footer {
     display: flex;
     justify-content: space-around;
+    border-top: solid;
 }
+
 .site__footer p {
     font-size: 16px;
 }
@@ -119,4 +122,44 @@ ul {
 
 .navigation-footer {
     min-width: 45%;
+}
+
+/**************** MODALE **************/
+
+.contact-btn {
+  display: inline-block;
+}
+
+/* Style initial pour cacher la modale */
+#global-modal {
+  display: none;
+}
+
+/* Style pour rendre la modale visible */
+#global-modal.show {
+  display: block;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-bottom: 5%;
+}
+
+#contact-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+	align-content: center;
+	flex-wrap: wrap;
+	width: 597px;
+  height: 769px;
+  border: 5px solid #000;
+}
+
+.modal-close-btn {
+  position: relative;
+  top: -146px;
+  right: -276px;
+  cursor: pointer;
+  font-size: 24px; 
+  color: #000;
 }
