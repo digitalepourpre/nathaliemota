@@ -69,14 +69,14 @@ Text Domain: nathaliemota
     font-size: 14px;
     color: black;
   }
-
+  
 /***************** HEADER ***************/
 
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 31px 146px 31px 146px;
+    padding: 31px 46px 31px 46px;
 }
 
 #menu-header {
@@ -103,6 +103,11 @@ ul {
     justify-content: space-between;
   }
 
+  @media screen and (max-width: 991px) {
+    .navigation-header {
+        display: none; /* Cache le menu */
+    }
+}
 
 /***************** FOOTER ***************/
 
@@ -118,6 +123,8 @@ ul {
 
 #menu-footer {
     display: flex;
+    padding: 0;
+    justify-content: space-between;
 }
 
 .navigation-footer {
@@ -138,28 +145,28 @@ ul {
 /* Style pour rendre la modale visible */
 #global-modal.show {
   display: block;
-  margin-left: 30%;
-  margin-right: 30%;
-  margin-bottom: 5%;
 }
 
 #contact-modal {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-	align-content: center;
 	flex-wrap: wrap;
 	width: 597px;
   height: 769px;
   border: 5px solid #000;
+  animation: fadeUp 0.2s;
+  margin-left: 420px;
+  margin-right: 420px;
 }
 
-.modal-close-btn {
-  position: relative;
-  top: -146px;
-  right: -276px;
-  cursor: pointer;
-  font-size: 24px; 
-  color: #000;
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
