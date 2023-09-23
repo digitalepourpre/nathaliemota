@@ -26,3 +26,23 @@ document.addEventListener("click", (event) => {
   }
 });
 })
+
+// BURGER MENU
+const burgerMenu = document.getElementById("burger-menu");
+const fullscreenMenu = document.getElementById("fullscreenMenu");
+const burgerImg = document.getElementById("burgerImg");
+const crossImg = document.getElementById("crossImg");
+
+burgerMenu.addEventListener("click", () => {
+  if (burgerMenu.classList == "activeMenu") {
+    fullscreenMenu.style.display = "none";
+    burgerImg.style.display = "block";
+    crossImg.style.display = "none";
+    burgerMenu.classList.remove("activeMenu");
+  } else {
+    fullscreenMenu.style.display = "block";
+    burgerImg.style.display = "none";
+    crossImg.style.display = "block";
+    burgerMenu.classList.add("activeMenu");
+  }
+});

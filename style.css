@@ -9,6 +9,15 @@ Tags: photographie
 Text Domain: nathaliemota
 */
 
+.menu {
+  position: fixed;
+  top: 0px;
+}
+
+.admin-bar .menu {
+top: 32px; /* on prend en compte le décalage */
+}
+
 /***************** FONTS ***************/
 
 @font-face {
@@ -72,7 +81,80 @@ Text Domain: nathaliemota
   
 /***************** HEADER ***************/
 
-.header {
+#masthead {
+  background-color: white;
+  padding: 30px 145px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+#site-navigation #site__header__menu {
+  display: flex;
+  list-style-type: none;
+  gap: 45px;
+  margin: 0;
+}
+
+#site-navigation #site__header__menu a {
+  text-decoration: none;
+  color: black;
+  text-transform: uppercase;
+}
+
+#site-navigation #site__header__menu p {
+  color: black;
+  text-transform: uppercase;
+  margin: 0;
+  cursor: pointer;
+}
+
+#site-navigation #site__header__menu a:hover,
+#site-navigation #site__header__menu p:hover {
+  font-weight: 700;
+}
+
+#site-navigation #fullscreenMenu {
+  display: none;
+  position: absolute;
+  background-color: #e00000;
+  top: 84px;
+  left: 0;
+  right: 0;
+}
+
+#site-navigation #fullscreenMenu ul.menu {
+  flex-direction: column;
+  padding: 0;
+  text-align: center;
+  padding: 40px;
+  font-size: 23px;
+}
+
+#site-navigation #fullscreenMenu ul.menu a,
+#site-navigation #fullscreenMenu ul.menu p {
+  color: white;
+}
+
+.main-navigation button {
+  border: 0;
+  background-color: transparent;
+  margin: auto;
+  display: none;
+  cursor: pointer;
+}
+
+.main-navigation button #crossImg {
+  display: none;
+}
+
+.site-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -94,7 +176,7 @@ a {
     font-family: 'space-mono';
 }
 
-.navigation-header {
+.main-navigation {
     min-width: 30%;
 }
 
@@ -103,21 +185,71 @@ ul {
     justify-content: space-between;
   }
 
-  @media screen and (max-width: 991px) {
-    .navigation-header {
-        display: none; /* Cache le menu */
-    }
+@media screen and (max-width: 767px) {
+  header#masthead {
+    padding: 30px 40px;
+  }
+
+  nav#site-navigation .desktop-menu {
+    display: none;
+  }
+
+  .main-navigation button {
+    display: block;
+  }
 }
 
 /***************** FOOTER ***************/
 
-.site__footer {
+#colophon {
+  display: flex;
+  justify-content: center;
+  border-top: solid 1px black;
+  padding: 10px 0;
+  margin-top: 50px;
+}
+
+#footer-navigation #footer-menu {
+  display: flex;
+  list-style-type: none;
+  gap: 85px;
+  margin: 0;
+}
+
+#footer-navigation #footer-menu a {
+  text-decoration: none;
+  color: black;
+  text-transform: uppercase;
+}
+
+#footer-navigation #footer-menu a:hover {
+  font-weight: 700;
+}
+
+#footer-navigation #footer-menu p {
+  text-decoration: none;
+  color: black;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+  #footer-navigation #footer-menu {
+    flex-direction: column;
+    text-align: center;
+    padding-left: 0;
+    gap: 25px;
+    margin-top: 40px;
+  }
+}
+
+.site-footer {
     display: flex;
     justify-content: space-around;
     border-top: solid;
 }
 
-.site__footer p {
+.site-footer p {
     font-size: 16px;
 }
 
@@ -127,7 +259,7 @@ ul {
     justify-content: space-between;
 }
 
-.navigation-footer {
+.footer-navigation {
     min-width: 45%;
 }
 

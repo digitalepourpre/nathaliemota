@@ -1,7 +1,7 @@
 <?php get_template_part( 'template-parts/modale' ); ?>
 
-<footer class="site__footer">
-    <nav class="navigation-footer">
+<footer id="colophon" class="site-footer">
+    <nav id="footer-navigation" class="footer-navigation">
     <?php 
         wp_nav_menu( 
             array( 

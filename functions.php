@@ -131,7 +131,7 @@ add_action( 'init', function() {
 		'view_items' => 'Voir Photos',
 		'add_new_item' => 'Ajouter Photo',
 		'new_item' => 'Nouveau Photo',
-		'parent_item_colon' => 'Photo parent :',
+		'parent_item_colon' => 'Photo parent',
 		'search_items' => 'Search Photos',
 		'not_found' => 'No photos found',
 		'not_found_in_trash' => 'No photos found in Trash',
