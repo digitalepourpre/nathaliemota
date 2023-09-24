@@ -47,10 +47,8 @@ function nathaliemota_register_post_types() {
 	);
 
 	register_post_type( 'portfolio', $args );
-}
 	 
 // Déclaration de la Taxonomie format
-function nathaliemota_register_taxonomies() {
 	$labels = array(
         'name' => 'Format',
         'new_item_name' => 'Nom du nouveau Format',
@@ -64,7 +62,7 @@ function nathaliemota_register_taxonomies() {
         'hierarchical' => true, 
     );
 
-    register_taxonomy( 'type-projet', 'portfolio', $args );
+    register_taxonomy( 'format-photo', 'portfolio', $args );
 
 // Déclaration de la Taxonomie catégorie
 	$labels = array(
@@ -80,7 +78,7 @@ function nathaliemota_register_taxonomies() {
         'hierarchical' => true, 
     );
 
-    register_taxonomy( 'type-projet', 'portfolio', $args );
+    register_taxonomy( 'categorie-photo', 'portfolio', $args );
 }
 
 add_action( 'init', 'nathaliemota_register_post_types' );

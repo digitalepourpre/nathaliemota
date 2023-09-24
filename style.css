@@ -302,3 +302,37 @@ ul {
     transform: translateY(0);
   }
 }
+
+/**************   SINGLE PAGE ***************/
+
+.photo-container {
+  display: flex;
+  flex-direction: row;
+}
+.singleInfos {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: flex-end;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.singleInfos p {
+  font-family: 'space-mono';
+  line-height: 20px;
+  letter-spacing: 2px;
+}
+
+.singleTitle {
+  line-height: 58px;
+}
+
+.singlePhoto {
+  width: 50%;
+}
+
+.singlePhoto img {
+  width: 100%;
+  height: auto;
+}
