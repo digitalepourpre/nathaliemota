@@ -185,7 +185,7 @@ ul {
     justify-content: space-between;
   }
 
-@media screen and (max-width: 767px) {
+@media (max-width: 767px) {
   header#masthead {
     padding: 30px 40px;
   }
@@ -233,7 +233,7 @@ ul {
   margin: 0;
 }
 
-@media screen and (max-width: 767px) {
+@media (max-width: 767px) {
   #footer-navigation #footer-menu {
     flex-direction: column;
     text-align: center;
@@ -312,10 +312,11 @@ ul {
 .singleInfos {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 50vw;
   justify-content: flex-end;
   align-content: center;
   flex-wrap: wrap;
+  border-bottom: 1px solid black;
 }
 
 .singleInfos p {
@@ -329,10 +330,57 @@ ul {
 }
 
 .singlePhoto {
-  width: 50%;
+  width: 50vw;
 }
 
 .singlePhoto img {
   width: 100%;
   height: auto;
+}
+
+.singleContact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 118px;
+  border-bottom: 1px solid black;
+}
+
+.suggestion-container h3 {
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  margin-top: 75px;
+  margin-bottom: 40px;
+}
+
+/*********** HERO ****************/
+
+.hero {
+  position: relative;
+  height: 50vw; 
+  text-align: center; 
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-hero {
+  min-width: 100%;
+  min-height: auto;
+  object-fit: contain;
+  z-index: -1; /* Placer l'image derrière le titre */
+}
+
+.title-hero {
+  color: transparent;
+  -webkit-text-stroke: 2px white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  z-index: 1; 
+  white-space: nowrap;
 }

@@ -82,3 +82,13 @@ function nathaliemota_register_post_types() {
 }
 
 add_action( 'init', 'nathaliemota_register_post_types' );
+
+ // Requête WP_Query
+ $query = new WP_Query($args);
+
+ // Ajout Jquery
+function enqueue_jquery()
+{
+    wp_enqueue_script('jquery');
+}
+add_action('wp_enqueue_scripts', 'enqueue_jquery');
