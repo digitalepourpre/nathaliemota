@@ -1,6 +1,5 @@
-<?php 
-	get_header();
-?>
+<?php get_header(); ?>
+
 
 <!-- Template Name: Ma page single-photo personnalisée -->
 
@@ -18,72 +17,63 @@
 	</div>
 
 	<div class="singlePhoto">
-		<?php the_post_thumbnail('full'); ?>
+		<?php the_post_thumbnail('medium'); ?>
 	</div>
 
 </div>
 
 <div class="contact-container">
 
-	<div class="singleContact">
-		<p>Cette photo vous intéresse ?</p>
+	<div class="demande-contact">
+
+		<div class="singleContact">
+			<p>Cette photo vous intéresse ?</p>
+		</div>
+
+		<button id="bouton-contact">Contact</button>
 	</div>
 
+	<div class="photo-navigation">
+		<div class="fleche-navigation">
+			<img class="fleche gauche" src="<?php echo get_template_directory_uri(); ?>/assets/images/left-arrow.svg" alt="fleche gauche">
+			<img class="fleche droite" src="<?php echo get_template_directory_uri(); ?>/assets/images/right-arrow.svg" alt="fleche droite">
+		</div>
+	</div>
+        
 </div>
 
 <div class="suggestion-container">
-
-	<div class="suggestion-title">
-		<h3>VOUS AIMEREZ AUSSI</h3>
+	<div class="suggestion">
+		<div class="suggestion-title">
+			<h3>VOUS AIMEREZ AUSSI</h3>
+		</div>
 	</div>
 
 	<div class="suggestion-photo">
 		<?php
-        	// Récupérer les catégories de la publication actuelle
-			$current_post_categories = get_the_terms($post->ID, 'category');
-			$current_category_ids = array();
-
-			if (!empty($current_post_categories)) {
-		  		foreach ($current_post_categories as $current_category) {
-					if ($current_category->parent == 3) {
-			  		// On ajoute seulement les ID des catégories enfant de la catégorie parent (id = 3)
-			  		$current_category_ids[] = $current_category->term_id;
-					}
-		  		}
-			}
-
-			// Utilise wp_query pour récupérer les photos de la même catégorie
+			// Affiche ici les photos apparentées en utilisant WP_Query
 			$args = array(
-				'post_type' => 'attachment', // Le type de contenu des photos.
-				'posts_per_page' => 2, // Le nombre de photos à afficher.
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'categorie-photo',
-						'field' => 'id',
-						'terms' => $category_ids,
-					),
-				),
-				'post__not_in' => array(get_the_ID()), // Exclure la photo courante.
+				'post_type' => 'portfolio',
+				'posts_per_page' => 2,
+				'cat' => $category_id,
+				'post__not_in' => array(get_the_ID()), // Exclure le contenu actuel
 			);
-
+		
 			$query = new WP_Query($args);
-
-			if ($query->have_posts()) {
-				while ($query->have_posts()) { 
-					$query->the_post();
-					// Affiche les photos de la même catégorie ici.
+		
+			if ($query->have_posts()) :
+			while ($query->have_posts()) :
+			$query->the_post();
+			get_template_part('templates_parts/photo-block');
+			endwhile;
+			endif;
+		
+			wp_reset_postdata();
 		?>
-		<?php get_template_part('parts/photo-block'); ?>
-		<?php 	}
-			} ?>
 	</div>
-
 </div>
 
-</div>
-
-<?php	endwhile; endif; ?>
-
-<?php	
-	get_footer(); 
+<?php
+endwhile; endif;
+get_footer();
 ?>

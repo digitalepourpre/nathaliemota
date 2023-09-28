@@ -8,7 +8,8 @@
 </head>
 
 <body <?php body_class(); ?>>
-    <header id="masterheadeer" class="site-header">
+    <?php wp_body_open(); ?>
+    <header id="masthead" class="site-header">
         <a href="<?php echo home_url( '/' ); ?>">
             <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/logo/logo.png" alt="logo">
         </a>
@@ -44,5 +45,3 @@
 
         </nav>
     </header>
-    
-<?php wp_body_open(); ?>
