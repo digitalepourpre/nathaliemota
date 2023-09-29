@@ -46,31 +46,3 @@ burgerMenu.addEventListener("click", () => {
     burgerMenu.classList.add("activeMenu");
   }
 });
-
-jQuery(function($) {
-  var page = 1;
-  var loading = false;
-  var $loadMoreButton = $('#load-more-button');
-  var $photoList = $('.photo-list');
-
-  $loadMoreButton.on('click', function() {
-      if (!loading) {
-          loading = true;
-          page++;
-          var data = {
-              action: 'load_more_photos',
-              page: page,
-          };
-
-          $.ajax({
-              url: ajaxurl, // Assurez-vous que ajaxurl est défini dans votre environnement WordPress
-              data: data,
-              type: 'POST',
-              success: function(response) {
-                  $photoList.append(response);
-                  loading = false;
-              },
-          });
-      }
-  });
-});

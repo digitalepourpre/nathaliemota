@@ -9,7 +9,7 @@
 
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
-    <header id="masthead" class="site-header">
+    <header id="masterhead" class="site-header">
         <a href="<?php echo home_url( '/' ); ?>">
             <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/logo/logo.png" alt="logo">
         </a>
@@ -36,7 +36,6 @@
                     wp_nav_menu( 
                         array( 
                             'theme_location' => 'main', 
-                            'container' => 'ul',
                             'menu_class' => 'site__header__menu',
                         ) 
                     );

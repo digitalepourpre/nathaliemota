@@ -1,31 +1,34 @@
 <?php 
 
-// Ajouter la prise en charge des images mises en avant
-add_theme_support( 'post-thumbnails' );
+    // Déclarer le fichier style.css à la racine du thème
 
-// Ajouter automatiquement le titre du site dans l'en-tête du site
-add_theme_support( 'title-tag' );
+function theme_enqueue_styles() {
+    wp_enqueue_style( 
+        'nathaliemota',
+        get_stylesheet_uri(), 
+        array(), 
+        '1.0'
+    );
 
-// Ajouter les menus à l'interface wp
+    // Charger le fichier JavaScript personnalisé
+
+    wp_enqueue_script('custom-script', get_stylesheet_directory_uri() . '/script.js', array('jquery'), '1.0', true);
+}
+add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
+
+    // Ajouter les menus à l'interface wp
+
 register_nav_menus( array(
 	'main' => 'Menu Principal',
 	'footer' => 'Bas de page',
 ) );
 
-function theme_enqueue_styles() {
-// Déclarer le fichier style.css à la racine du thème
-wp_enqueue_style( 
-	'nathaliemota',
-	get_stylesheet_uri(), 
-	array(), 
-	'1.0'
-);
-// Charger le fichier JavaScript personnalisé
-wp_enqueue_script('custom-script', get_stylesheet_directory_uri() . '/script.js', array('jquery'), '1.0', true);
-}
-add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
+    // Ajouter la prise en charge des images mises en avant
 
-// Déclaration Custom Post Type
+add_theme_support( 'post-thumbnails' );
+
+    // Déclaration Custom Post Type
+
 function nathaliemota_register_post_types() {
 	$labels = array(
         'name' => 'Portfolio',
@@ -48,7 +51,8 @@ function nathaliemota_register_post_types() {
 
 	register_post_type( 'portfolio', $args );
 	 
-// Déclaration de la Taxonomie format
+    // Déclaration de la Taxonomie format
+
 	$labels = array(
         'name' => 'Format',
         'new_item_name' => 'Nom du nouveau Format',
@@ -64,7 +68,8 @@ function nathaliemota_register_post_types() {
 
     register_taxonomy( 'format-photo', 'portfolio', $args );
 
-// Déclaration de la Taxonomie catégorie
+    // Déclaration de la Taxonomie catégorie
+
 	$labels = array(
         'name' => 'Catégorie',
         'new_item_name' => 'Nom du nouveau Catégorie',
@@ -82,33 +87,3 @@ function nathaliemota_register_post_types() {
 }
 
 add_action( 'init', 'nathaliemota_register_post_types' );
-
-// Fonctions pour la pagination et les filtres
-add_action('wp_ajax_load_more_photos', 'load_more_photos');
-add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
-
-add_action('wp_ajax_filter_photos', 'filter_photos');
-add_action('wp_ajax_nopriv_filter_photos', 'filter_photos');
-
-function filter_photos() {
-    $category = $_POST['category'];
-
-    $args = array(
-        'post_type' => 'votre_type_de_contenu_personnalise',
-        'posts_per_page' => -1,
-        'category_name' => $category,
-    );
-
-    $photo_query = new WP_Query($args);
-
-    if ($photo_query->have_posts()) :
-        while ($photo_query->have_posts()) : $photo_query->the_post();
-            // Affichez ici chaque photo individuelle
-        endwhile;
-        wp_reset_postdata();
-    else :
-        echo 'Aucune photo trouvée pour cette catégorie.';
-    endif;
-
-    wp_die();
-}

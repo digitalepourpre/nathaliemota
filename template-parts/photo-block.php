@@ -1,41 +1,7 @@
-<?php
-// catégorie de la photo en cours
-$categories = get_the_terms(get_the_ID(), 'categorie-photo');
-
-if ($categories && !is_wp_error($categories)) {
-    $category_ids = wp_list_pluck($categories, 'term_id');
-    $category_id = implode(',', $category_ids);
-
-    // Affiche deux photos de la même catégorie
-    $args = array(
-        'post_type' => 'portfolio',
-        'posts_per_page' => 2,
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'categorie-photo',
-                'field' => 'id',
-                'terms' => $category_id,
-            ),
-        ),
-        'post__not_in' => array(get_the_ID()), // Exclure le contenu actuel
-    );
-
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) :
-        while ($query->have_posts()) :
-            $query->the_post();
-            ?>
-            <div class="suggestion-photo-block">
-                <a href="<?php the_permalink(); ?>">
-                    <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php the_title(); ?>">
-                </a>
-                <h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-            </div>
-            <?php
-        endwhile;
-    endif;
-
-    wp_reset_postdata();
-}
-?>
+<img class="photo" src="<?php $photo = the_post_thumbnail_url("large");?>" alt="<?php the_title_attribute(); ?>">
+    <div class="hover-img">
+        <img class="icon-fullscreen icon-lightbox" src="<?php echo get_template_directory_uri() .'/assets/images/fullscreen.svg';?>" alt="Icône Fullscreen"> 
+        <a href="<?php echo get_permalink() ?>"><img class="hover-eye"  src="<?php echo get_template_directory_uri() .'/assets/images/eye.svg';?>" alt="Icône Eye"> </a>
+        <h2 class="reference"><?php echo get_field('reference'); ?></h2>
+        <h3 class="categorie"><?php echo get_the_terms(get_the_ID(), 'categorie')[0]->name ?></h3>
+    </div>
