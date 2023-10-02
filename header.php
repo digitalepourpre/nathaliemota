@@ -4,6 +4,7 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
     <?php wp_head(); ?>
 </head>
 
@@ -26,6 +27,7 @@
 					    array(
 						    'theme_location' => 'main',
 						    'menu_id'        => 'site__header__menu',
+                            'container' => 'ul'
 					    )
 				    );
 			    ?>
@@ -37,6 +39,7 @@
                         array( 
                             'theme_location' => 'main', 
                             'menu_class' => 'site__header__menu',
+                            'container' => 'ul'
                         ) 
                     );
                 ?>

@@ -24,15 +24,13 @@
 <?php if( have_posts() ) : while( have_posts() ) : the_post(); ?>
 
 <div class="photo-container">
-	<div  class="informations-photo">
-		<div class="singleInfos">
-			<h2 class="singleTitle"><?php the_title(); ?></h2>
-			<p>RÉFÉRENCE : <span class="reference-photo"><?php the_field( 'reference' ); ?></span></p>
-			<p>CATÉGORIE : <?php echo $taxo_categorie[0]->name ?></p>
-			<p>FORMAT : <?php echo $taxo_format[0]->name ?></p>
-			<p>TYPE : <?php the_field( 'type' ); ?></p>
-			<p>ANNÉE : <?php the_field('annee'); ?></p>
-		</div>
+	<div class="singleInfos">
+		<h2 class="singleTitle"><?php the_title(); ?></h2>
+		<p>RÉFÉRENCE : <span class="reference-photo"><?php the_field( 'reference' ); ?></span></p>
+		<p>CATÉGORIE : <?php echo $taxo_categorie[0]->name ?></p>
+		<p>FORMAT : <?php echo $taxo_format[0]->name ?></p>
+		<p>TYPE : <?php the_field( 'type' ); ?></p>
+		<p>ANNÉE : <?php the_field('annee'); ?></p>
 	</div>
 
 	<div class="affichage-photo">
@@ -46,41 +44,46 @@
 
 <div class="contact-container">
 
-	<div class="demande-contact">
-
-		<div class="singleContact">
-			<p>Cette photo vous intéresse ?</p>
+	<div class="singleContact">
+		<p>Cette photo vous intéresse ?</p>
+		<div class="singleBtn">
 			<button type="button" id="bouton-contact">Contact</button>
 		</div>
-		<div class="container-arrows"> 
-			<?php 
-				$args = array( 
-					'post_type' => 'photo',
-					'posts_per_page' => 2,
-				);
-			?>
-			<div class="navigation-arrows">
-
-				<?php if (!empty($previousPost)){ ?>
-				<div class="container-image-arrows"> 
-					<?php echo get_the_post_thumbnail ($previousPost->ID, 'thumbnail', ['class'=>"img-arrows"])?>
-				</div>
-				<a href="<?php echo get_permalink($previousPost->ID) ?>"><img class="arrow" src="<?php echo get_template_directory_uri() .'/assets/images/left-arrow.svg';?>" alt="Flèche précédent"></a>
-				<?php } ?>
-
-				<?php if (!empty($nextPost)){ ?>   
-				<a href="<?php echo get_permalink($nextPost->ID) ?>"><img class="arrow" src="<?php echo get_template_directory_uri() .'/assets/images/right-arrow.svg';?>" alt="Flèche suivant"></a>   
-				<?php } ?>
-			</div>
-		</div>
 	</div>
+
+	<div class="container-arrows"> 
+		<?php
+    		$prevPost = get_previous_post();
+    		$nextPost = get_next_post();
+    	?>
+    <!-- Miniature précédente -->
+		<div class="navigation-left">
+			<div class="thumbnail-previous">
+      			<?php $prev_post = get_previous_post(false, '', 'portfolio'); ?>
+      			<?php if ($prev_post) : ?>
+        			<img class="nav-thumbnail-prev" src="<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($prev_post->ID), 'thumbnail' ); ?>" alt="<?php echo $prev_post->post_title; ?>">
+      			<?php endif; ?>
+      		</div>
+      		<?php previous_post_link('%link', '<img src="/assets/images/left-arrow.svg" alt="Précédent">', true, '', 'portfolio'); ?>
+		</div>
+	 <!-- Miniature suivante -->
+		<div class="navigation-right">
+			<div class="thumbnail-next">
+      			<?php $next_post = get_next_post(false, '', 'portfolio'); ?>
+      			<?php if ($next_post) : ?>
+        			<img class="nav-thumbnail-next" src="<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($next_post->ID), 'thumbnail' ); ?>" alt="<?php echo $next_post->post_title; ?>">
+      			<?php endif; ?>
+      		</div>
+      		<?php next_post_link('%link', '<img src="/assets/right-arrow.svg" alt="Suivant">', true, '', 'portfolio'); ?>
+    	</div>
+	</div>
+
 </div>
 
 <div class="suggestion-container">
-	<div class="suggestion">
-		<div class="suggestion-title">
-			<h3>VOUS AIMEREZ AUSSI</h3>
-		</div>
+
+	<div class="suggestion-title">
+		<h3>VOUS AIMEREZ AUSSI</h3>
 	</div>
 
 	<div class="suggestion-photo">
@@ -105,7 +108,7 @@
 			if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post();
 		?>
 
-		<div class ="container-similar-photo">
+		<div class ="suggestion">
 			<?php get_template_part('template-parts/photo-block'); ?>
 		</div>
 

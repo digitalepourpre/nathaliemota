@@ -46,3 +46,5 @@ burgerMenu.addEventListener("click", () => {
     burgerMenu.classList.add("activeMenu");
   }
 });
+
+// JavaScript pour afficher la miniature au survol
