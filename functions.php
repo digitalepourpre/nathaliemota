@@ -13,8 +13,9 @@ function theme_enqueue_styles() {
     // Charger le fichier JavaScript personnalisé
 
     wp_enqueue_script('custom-script', get_stylesheet_directory_uri() . '/script.js', array('jquery'), '1.0', true);
-}
-add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
+    }
+    
+    add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 
     // Ajouter les menus à l'interface wp
 
@@ -87,3 +88,26 @@ function nathaliemota_register_post_types() {
 }
 
 add_action( 'init', 'nathaliemota_register_post_types' );
+
+// wp query et ajax
+
+function nathaliemota_request_portfolio() {
+    $args = array('post_type' => 'portfolio', 'posts_per_page' => 2 ); $query = new WP_Query($args);
+    if($query->have_posts()) {
+    $response = $query;
+    } else {
+    $response = false;
+    }
+    
+    wp_send_json($response);
+    wp_die();
+    }
+
+    add_action( 'wp_ajax_request_portfolio', 'nathaliemota_request_portfolio' ); add_action( 'wp_ajax_nopriv_request_portfolio', 'nathaliemota_request_portfolio' );
+
+    function nathaliemota_scripts() {
+        wp_enqueue_script('nathaliemota', get_template_directory_uri() . 'script.js', array('jquery'), '1.0.0', true);
+        wp_localize_script('nathaliemota', 'script_js', array('ajax_url' => admin_url('admin-ajax.php')));
+        }
+        
+        add_action('wp_enqueue_scripts', 'nathaliemota_scripts');
