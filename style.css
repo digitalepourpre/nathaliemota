@@ -558,3 +558,15 @@ img.photo {
   color: #ffffff;
   background-color: #000000;
 }
+
+/***************** FRONT PAGE ******************/
+
+.hero, .hero-banner {
+  width: 1440px;
+  height: 962px;
+}
+
+.hero-title {
+  display: flex;
+  justify-content: center;
+}

@@ -1,4 +1,4 @@
-<?php get_header() ?>
+<?php get_header(); ?>
 
 <?php 
     // Champs ACF
@@ -16,9 +16,44 @@
 	$id = get_the_ID();
     $url = get_permalink();
 
-    //Flèches précédent et suivant
-	$nextPost = get_next_post();
-    $previousPost = get_previous_post();
+    $args = array(
+        'post_type' => 'portfolio',
+        'posts_per_page' => 1,
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'format-photo',
+                'field' => 'slug',
+                'terms' => 'paysage',
+            ),
+        ),
+        'orderby' => 'rand', // Sélectionner une image aléatoire
+    );
+
+    $random_query = new WP_Query($args);
+
 ?>
 
-<?php get_footer() ?>
+<!-- HERO -->
+<div class="hero">
+        
+    <?php
+        if ($random_query->have_posts()) :
+        while ($random_query->have_posts()) :
+        $random_query->the_post();
+        // Récupérer l'image en tant que fond du héros
+        $image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+    ?>
+
+    <div class="hero-banner" style="background-image: url('<?php echo esc_url($image_url); ?>');">
+        <div class="hero-title">
+            <img class="photograph-event" src="<?php echo get_template_directory_uri() .'/assets/images/photo-event.png';?>" alt="Titre du hero">
+        </div>
+    </div>
+
+    <?php endwhile;
+        wp_reset_postdata();
+        endif;
+    ?>
+</div>
+
+<?php get_footer(); ?>
