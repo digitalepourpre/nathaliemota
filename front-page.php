@@ -40,20 +40,53 @@
         if ($random_query->have_posts()) :
         while ($random_query->have_posts()) :
         $random_query->the_post();
-        // Récupérer l'image en tant que fond du héros
+        // Récupérer l'image en tant que fond du hero
         $image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
     ?>
 
-    <div class="hero-banner" style="background-image: url('<?php echo esc_url($image_url); ?>');">
-        <div class="hero-title">
-            <img class="photograph-event" src="<?php echo get_template_directory_uri() .'/assets/images/photo-event.png';?>" alt="Titre du hero">
-        </div>
+    <div class="hero-banner"> 
+        <img class="hero-img" src="<?php echo esc_url($image_url); ?>" alt="Image du hero">
+        <h1>PHOTOGRAPHE EVENT</H1>
     </div>
 
     <?php endwhile;
         wp_reset_postdata();
         endif;
     ?>
+</div>
+
+<!-- CATALOGUE -->
+<?php
+    $args = array(
+    'post_type' => 'portfolio',
+    'posts_per_page' => 12,
+    'orderby' => 'rand', // Sélectionner une image aléatoire
+    );
+
+    $catalogue_query = new WP_Query($args);
+?>
+
+<div class="catalogue-photo">
+
+    <?php
+        if ($catalogue_query->have_posts()) : 
+        while ($catalogue_query->have_posts()) :
+        $catalogue_query->the_post();
+    ?>
+
+    <div class ="grille-photo">
+        <?php get_template_part('/template-parts/photo-block'); ?>
+    </div>
+    
+    <?php endwhile;
+        wp_reset_postdata();
+        endif;
+    ?>
+
+</div>
+
+<div class="load-more-container">
+    <button id="load-more">Charger plus</button>
 </div>
 
 <?php get_footer(); ?>

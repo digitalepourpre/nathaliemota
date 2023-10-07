@@ -334,7 +334,7 @@ ul {
 
 /* Titre et informations de la photo */
 
-.informations-photo{
+.informations-photo {
   display: flex;
   width: 100%;
   height: 58.3em; 
@@ -350,7 +350,7 @@ ul {
   font-family:'space-mono';
 }
 
-.informations h1{
+.informations h1 {
   font-size: 4.37vw;
   font-style: italic;
   font-weight: normal;
@@ -358,7 +358,7 @@ ul {
   margin-bottom: 44px;
 }
 
-.informations p{
+.informations p {
   font-size: 0.9em;
   text-transform: uppercase; 
   margin-left: 10px;
@@ -366,7 +366,7 @@ ul {
 
 /* Affichage Photo */
 
-.affichage-photo{
+.affichage-photo {
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -374,7 +374,7 @@ ul {
   height: 100%;
 }
 
-.single-photo{
+.single-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -383,7 +383,7 @@ ul {
 
 /* Contact et Navigation Photo */
 
-.contact-menu{
+.contact-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -392,7 +392,7 @@ ul {
   border-bottom: 1px solid #000000;
 }
 
-.contact-menu p{
+.contact-menu p {
   font-family:'poppins';
   font-size: 14px;
   font-weight: 300;
@@ -403,7 +403,7 @@ ul {
   display:flex;
 }
 
-.button-contact{
+.button-contact {
   width: 272px;
   height: 50px;
   font-family: 'space-mono';
@@ -416,14 +416,14 @@ ul {
   cursor: pointer;
 }
 
-.button-contact:hover{
+.button-contact:hover {
   color: #ffffff;
   background-color: #000000;
 }
 
 /*Flèches précédent et suivant*/
 
-.container-arrows{
+.container-arrows {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -432,31 +432,31 @@ ul {
   height: 100%;
 }
 
-.container-image-arrows{
+.container-image-arrows {
   width: 5.1em;
   height: 4.1em;
   margin-left: -0.70em;
 }
 
-.img-arrows{
+.img-arrows {
   width: 5.1em;
   height: 4.1em;
   object-fit: cover;
 }
 
-.arrow:hover{
+.arrow:hover {
   transform: scale(1.2);
 }
 
 /* Images Similaires */
 
-.container-similar-img{
+.container-similar-img {
   display: flex;
   flex-direction: row;  
   justify-content: space-around;
 }
 
-.container-similar-photo{
+.container-similar-photo, .grille-photo {
   height: 495px;
   width: 564px; 
   position: relative;
@@ -464,7 +464,7 @@ ul {
 
 /* Hover sur les Photos et Titres */
 
-.hover-img{
+.hover-img {
   position: absolute;
   top: 0;
   left: 0;
@@ -475,15 +475,15 @@ ul {
   transition: opacity 0.2s ease-in-out;
 }
 
-.container-similar-photo:hover .hover-img{
+.container-similar-photo:hover .hover-img {
   opacity: 1;
 }
 
-.affichage-photo:hover .hover-img{
+.affichage-photo:hover .hover-img {
   opacity: 1;
 }
 
-.hover-eye{
+.hover-eye {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -492,7 +492,7 @@ ul {
   transform: translate(-50%, -50%);
 }
 
-.hover-fullscreen{
+.hover-fullscreen {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -500,12 +500,12 @@ ul {
   height: 3.8em;
 }
 
-.icon-lightbox{
+.icon-lightbox {
   margin: 10px 0 0 10px;
   cursor: pointer;
 }
 
-.container-similar-img .container-similar-photo .hover-img h2{
+.container-similar-img .container-similar-photo .hover-img h2 {
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -516,7 +516,7 @@ ul {
   color: #ffffff;
 }
 
-.container-similar-photo .hover-img h3{
+.container-similar-photo .hover-img h3 {
   position: absolute;
   bottom: 20px;
   right: 20px;
@@ -535,14 +535,14 @@ img.photo {
 
 /* Bouton "Toutes les photos" */
 
-.container-all{
+.container-all, .load-more-container {
   width: 100%;
   height: auto;
   text-align: center;
   margin-top: 3.3em;
 }
 
-.button-single{
+#load-more, .button-single {
   width: 272px;
   height: 50px;
   font-family: 'space-mono';
@@ -554,7 +554,7 @@ img.photo {
   cursor: pointer;
 }
 
-.button-single:hover{
+.button-single:hover {
   color: #ffffff;
   background-color: #000000;
 }
@@ -566,7 +566,20 @@ img.photo {
   height: 962px;
 }
 
+.hero-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
 .hero-title {
+  position: relative;
+}
+
+.catalogue-photo {
   display: flex;
-  justify-content: center;
+  flex-direction: row;  
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  row-gap: 10px;
 }
