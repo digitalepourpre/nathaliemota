@@ -66,6 +66,56 @@
     $catalogue_query = new WP_Query($args);
 ?>
 
+<div class="section-filtres">
+
+    <div class="categorie-filtre">
+        <form class="colonne-filtre">
+            <select id="categories">
+                <option value="all" hidden></option>
+                <option value="all" selected>CATÉGORIES</option>
+                <?php
+                    $categories = get_terms(array(
+                        "taxonomy" => "categorie-photo",
+                        "hide_empty" => false,
+                    ));
+                    foreach ($categories as $categorie) {
+                        echo '<option value="' . $categorie->slug . '">' . mb_convert_case($categorie->name, MB_CASE_TITLE, "UTF-8") . '</option>';
+                    }
+                ?>
+            </select>
+        </form>
+    </div>
+
+    <div class="format-filtre">
+        <form class="colonne-filtre">
+            <select id="formats">
+                <option value="all" hidden></option>
+                <option value="all" selected>FORMATS</option>
+                <?php
+                    $formats = get_terms(array(
+                        "taxonomy" => "format-photo",
+                        "hide_empty" => false,
+                    ));
+                    foreach ($formats as $format) {
+                        echo '<option value="' . $format->slug . '">' . mb_convert_case($format->name, MB_CASE_TITLE, "UTF-8") . '</option>';
+                    }
+                ?>
+            </select>
+        </form>
+    </div>
+
+    <div class="date-filtre">
+        <form class="colonne-filtre">
+            <select id="dates">
+                <option value="all" hidden></option>
+                <option value="all" selected>TRIER PAR</option>
+                <option value="DESC">Les Plus Récentes</option>
+                <option value="ASC">Les Plus Anciennes</option>
+            </select>
+        </form>
+    </div>
+</div>
+
 <div class="catalogue-photo">
 
     <?php

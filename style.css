@@ -612,7 +612,6 @@ height: auto; /* Hauteur automatique pour s'adapter au contenu */
 .hero-banner {
 position: relative;
 width: 100%;
-padding-bottom: 66.81%; /* Ratio de l'image (hauteur / largeur) pour maintenir l'aspect */
 overflow: hidden;
 }
 
@@ -662,6 +661,39 @@ align-items: center; /* Centre les éléments */
 width: 317.66px; /* Largeur souhaitée pour les images */
 height: 278.8px; /* Hauteur souhaitée pour les images */
 }
+}
+
+.section-filtres {
+  width: 94%;
+  padding-bottom: 1.5em;
+  padding-top: 6em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.colonne-filtre {
+  display: flex;
+  flex-direction: column;
+}
+
+.categorie-filtre, .format-filtre {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding-left: 30px;
+}
+
+select#categories, select#formats, select#dates {
+  border: 1px solid #B8BBC2;
+  border-radius: 8px;
+  font-family: 'poppins';
+  font-size: 0.8em;
+  padding-top: 11px;
+  padding-left: 18px;
+  padding-bottom: 11px;
+  padding-right: 18px;
+  justify-content: space-between;
 }
 
 
