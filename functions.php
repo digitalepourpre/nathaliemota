@@ -1,5 +1,20 @@
 <?php 
 
+    // Google web fonts pour WordPress
+
+function google_fonts() {
+    wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap', false );
+    wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;1,400;1,700&display=swap', false );
+}
+add_action( 'wp_enqueue_scripts', 'google_fonts' );
+
+    // Format des images de la galerie
+
+add_action('after_setup_theme', 'wpdocs_theme_setup');
+function wpdocs_theme_setup() {
+    add_image_size('custom-size', 500, 500, true);
+}
+
     // Déclarer le fichier style.css à la racine du thème
 
 function theme_enqueue_styles() {

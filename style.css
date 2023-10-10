@@ -28,62 +28,34 @@ Text Domain: nathaliemota
   
   
   /***************** FONTS ***************/
-  
-  
-  @font-face {
-  font-family: 'space-mono';
-  src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-Regular.woff');
-  font-display: swap;
-  font-style: italic;
-  font-weight: 700;
-  }
-  @font-face {
-  font-family: 'space-mono';
-  src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-Regular.woff');
-  font-display: swap;
-  font-style: italic;
-  font-weight: 400;
-  }
-  @font-face {
-  font-family: 'space-mono';
-  src: url('wp-content/themes/nathaliemota/assets/fonts/SpaceMono-Regular.woff');
-  font-display: swap;
-  font-style: normal;
-font-weight: 400;
-}
-@font-face {
-font-family: 'poppins';
-src: url('wp-content/themes/nathaliemota/assets/fonts/Poppins-Regular.ttf');
-font-display: swap;
-font-style: normal;
-font-weight: 300;
-}
-
 
 h1 {
-font-family: 'space-mono';
+font-family: 'Space Mono', serif;
 font-style: italic;
 font-weight: 700;
 font-size: 96px;
 color: black;
 display: none;
 }
+
 h2 {
-font-family: 'space-mono';
+font-family: 'Space Mono', serif;
 font-style: italic;
 font-weight: 400;
 font-size: 66px;
 color: black;
 }
+
 h3 {
-font-family: 'space-mono';
+font-family: 'Space Mono', serif;
 font-style: normal;
 font-weight: 400;
 font-size: 18px;
 color: black;
 }
+
 p {
-font-family: 'poppins';
+font-family: 'Poppins', serif;
 font-weight: 300;
 font-style: normal;
 font-size: 14px;
