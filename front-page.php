@@ -135,8 +135,13 @@
 
 </div>
 
-<div class="load-more-container">
-    <button id="load-more">Charger plus</button>
-</div>
+<?php
+    global $wp_query;
+    if (  $wp_query->max_num_pages > 1 ) {
+	    echo '<div class="mota_loadmore">Chargez plus</div>';
+    } else {
+        echo '<p>Aucun autre résultat à charger.</p>';
+    }
+?>
 
 <?php get_footer(); ?>

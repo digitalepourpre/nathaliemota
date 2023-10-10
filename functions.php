@@ -103,3 +103,53 @@ function nathaliemota_register_post_types() {
 }
 
 add_action( 'init', 'nathaliemota_register_post_types' );
+
+// LOAD MORE
+function mota_my_load_more_scripts() {
+
+    global $wp_query;
+
+	wp_enqueue_script('jquery');
+
+	wp_register_script( 'my_loadmore', get_stylesheet_directory_uri() . '/js/loadmore.js', array('jquery') );
+    wp_localize_script( 'my_loadmore', 'mota_loadmore_params', array(
+		'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
+		'posts' => json_encode( $wp_query->query_vars ),
+		'current_page' => get_query_var( 'paged' ) ? get_query_var('paged') : 1,
+		'max_page' => $wp_query->max_num_pages
+	) );
+ 
+ 	wp_enqueue_script( 'my_loadmore' );
+}
+ 
+add_action( 'wp_enqueue_scripts', 'mota_my_load_more_scripts' );
+
+// AJAX
+function mota_loadmore_ajax_handler(){
+ 
+	$args = json_decode( stripslashes( $_POST['query'] ), true );
+	$args['paged'] = $_POST['page'] + 1;
+	$args['post_status'] = 'publish';
+
+    $args['post_type'] = 'portfolio';
+ 
+    $query = new WP_Query($args);
+ 
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            // Récupére l'image mise en avant du CPT "portfolio"
+            if (has_post_thumbnail()) {
+                $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail'); 
+                echo '<img src="' . esc_url($thumbnail_url) . '" alt="' . esc_attr(get_the_title()) . '" />';
+            }
+        }
+    }
+    
+    die;
+}
+add_action('wp_ajax_loadmore', 'mota_loadmore_ajax_handler');
+add_action('wp_ajax_nopriv_loadmore', 'mota_loadmore_ajax_handler');
+
+// FILTRES
