@@ -5,7 +5,7 @@
     $titre = get_field('nom'); 
     $type = get_field('type');
     $annee = get_field('annee');
-	$photo_url = get_field('photo');
+	$image_id = get_field('photo');
     $reference = get_field('reference'); 
 
     // Champs de Taxonomies
@@ -135,13 +135,14 @@
 
 </div>
 
-<?php
-    global $wp_query;
-    if (  $wp_query->max_num_pages > 1 ) {
-	    echo '<div class="mota_loadmore">Chargez plus</div>';
-    } else {
-        echo '<p>Aucun autre résultat à charger.</p>';
-    }
-?>
+
+<div>
+    <button class="js-load-photos"
+        data-posttype="photo"
+        data-nonce="<?php echo wp_create_nonce('loadmore'); ?>"
+        data-action="loadmore"
+        data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
+        Charger plus de photos</button>
+</div>
 
 <?php get_footer(); ?>

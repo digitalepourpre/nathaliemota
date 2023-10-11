@@ -1,36 +1,56 @@
 
 // LOAD MORE
-jQuery(function($){
-
-    $('.mota_loadmore').click(function(){ //bouton
+(function ($) {
+    $(document).ready(function () {
+        let photosChargées = 0;
+      // Chargment des commentaires en Ajax
+      $(".js-load-photos").click(function (e) {
+        // Empêcher l'envoi classique du formulaire
+        e.preventDefault();
   
-      let button = $(this),
-            data = {
-                'action': 'loadmore',
-                'query': mota_loadmore_params.posts, // params dans wp_localize_script()
-                'page' : mota_loadmore_params.current_page
-            };
+        // L'URL qui réceptionne les requêtes Ajax dans le data
+        const ajaxurl = $(this).data("ajaxurl");
   
-      $.ajax({
-              url : mota_loadmore_params.ajaxurl,
-              data : data,
-              type : 'POST',
+        // Les data du bouton
+        // ⚠️ Ne changez pas le nom "action" !
+        const data = {
+          action: $(this).data("action"),
+          nonce: $(this).data("nonce"),
+          posttype: $(this).data("posttype"),
+        };
   
-              success : function( data ){
-                  if( data ) { 
-                      button.text( 'Chargez plus' ).prev().before(data);
-                      mota_loadmore_params.current_page++;
-   
-                      if ( mota_loadmore_params.current_page == mota_loadmore_params.max_page ) 
-                          button.remove(); // pas de bouton si tout est chargé
-   
-                  } else {
-                      button.remove();
-                  }
-              }
-          });
+        // Pour vérifier qu'on a bien récupéré les données
+        console.log(ajaxurl);
+        console.log(data);
+  
+        // Requête Ajax en JS natif via Fetch
+        fetch(ajaxurl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Cache-Control": "no-cache",
+          },
+          body: new URLSearchParams(data),
+        })
+          .then((response) => response.json())
+          .then((response) => {
+            console.log(response);
+  
+            // En cas d'erreur
+            if (!response.success) {
+              alert(response.data);
+              return;
+            }
+  
+             // Et en cas de réussite
+             if (response.data === "") {
+                alert("Toutes les photos sont chargées."); // Message de fin de chargement
+                $(".js-load-photos").hide(); // Masque le bouton
+            } else {
+                $(".catalogue-photo").append(response.data);
+                photosChargées++; // Incrémente le compteur
+            }
+        });
       });
-  });
-  
-  // FILTRES
-  
+});
+})(jQuery);

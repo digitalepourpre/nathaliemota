@@ -125,31 +125,47 @@ function mota_my_load_more_scripts() {
 add_action( 'wp_enqueue_scripts', 'mota_my_load_more_scripts' );
 
 // AJAX
-function mota_loadmore_ajax_handler(){
- 
-	$args = json_decode( stripslashes( $_POST['query'] ), true );
-	$args['paged'] = $_POST['page'] + 1;
-	$args['post_status'] = 'publish';
 
-    $args['post_type'] = 'portfolio';
- 
+function loadmore(){
+    $photosChargées = 0; // Déclarer et initialiser le compteur
+
+    // Récupérer les articles de type "portfolio"
+    $args = array(
+        'post_type' => 'portfolio', // Utilisez le nom du type de publication personnalisé
+        'posts_per_page' => -1, // Récupérer tous les articles
+        );
+    
     $query = new WP_Query($args);
- 
+
+    // Préparer le HTML des images
+    $html = '';
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
-
-            // Récupére l'image mise en avant du CPT "portfolio"
-            if (has_post_thumbnail()) {
-                $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail'); 
-                echo '<img src="' . esc_url($thumbnail_url) . '" alt="' . esc_attr(get_the_title()) . '" />';
-            }
+            // Récupérer l'URL de l'image mise en avant et l'alt
+            $image_url = get_the_post_thumbnail_url(get_the_ID());
+            $image_alt = get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true);
+            // Ajouter l'image au HTML
+            $html .= '<img src="' . $image_url . '" alt="' . $image_alt . '">';
         }
     }
-    
-    die;
+
+    wp_reset_postdata(); // Réinitialiser la requête WP_Query
+
+        // Comptez le nombre total d'articles de type "portfolio"
+        $total_photos = wp_count_posts('portfolio')->publish;
+
+        // Si le nombre de photos chargées est supérieur ou égal au total
+        if ($photosChargées >= $total_photos) {
+            wp_send_json_success('', 200); // Indique que toutes les photos sont chargées
+        } else {
+            $photosChargées++; // Incrémenter le compteur
+  	// Envoyer les données au navigateur
+	wp_send_json_success( $html );
+
 }
-add_action('wp_ajax_loadmore', 'mota_loadmore_ajax_handler');
-add_action('wp_ajax_nopriv_loadmore', 'mota_loadmore_ajax_handler');
+}
+add_action('wp_ajax_loadmore', 'loadmore');
+add_action('wp_ajax_nopriv_loadmore', 'loadmore');
 
 // FILTRES
