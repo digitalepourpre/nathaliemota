@@ -48,3 +48,27 @@ burgerMenu.addEventListener("click", () => {
 });
 
 // LIGHTBOX
+var btnFermetureLightbox = $('#close-lightbox');
+var dureeTransitionPopup = 1000; 
+
+// Fonction pour effectuer une transition d'affichage avec une opacité donnée
+  function transitionPopup(element, opacity) {
+    $(element).css('display', opacity === 1 ? 'flex' : 'none');
+    $(element).animate({ opacity: opacity }, dureeTransitionPopup);
+}
+
+// Lorsqu'on clique sur l'icone fullscreen
+$(document).on('click', '.lightbox-trigger', function() {
+
+// On récupére l'URL de l'image sur laquelle l'utilisateur a cliqué
+  var urlImage = $(this).attr('src');
+  var creerImage = `<img src="${urlImage}" alt="Image agrandie">`;
+  $('.lightbox__image').html(creerImage);
+  transitionPopup($('.lightbox'), 1); // Affiche la lightbox avec effet de transition
+  
+});
+
+// Lorsqu'on clique sur le bouton de fermeture de la lightbox
+btnFermetureLightbox.click(function() {
+  transitionPopup($('.lightbox'), 0); // Ferme la lightbox avec effet de transition
+});

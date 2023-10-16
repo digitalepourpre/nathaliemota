@@ -167,5 +167,3 @@ function loadmore(){
 }
 add_action('wp_ajax_loadmore', 'loadmore');
 add_action('wp_ajax_nopriv_loadmore', 'loadmore');
-
-// FILTRES

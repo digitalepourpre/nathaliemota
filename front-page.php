@@ -136,7 +136,7 @@
 </div>
 
 
-<div>
+<div class="mota_loadmore">
     <button class="js-load-photos"
         data-posttype="photo"
         data-nonce="<?php echo wp_create_nonce('loadmore'); ?>"

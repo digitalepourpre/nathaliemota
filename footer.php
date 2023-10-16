@@ -1,6 +1,8 @@
-<?php get_template_part( 'template-parts/modale' ); ?>
+<?php 
+    get_template_part( 'template-parts/modale' );
+    get_template_part( 'template-parts/lightbox' ); 
+?>
 
-<div class="lightbox"></div>
 
 <footer id="colophon" class="site-footer">
     <nav id="footer-navigation" class="footer-navigation">
