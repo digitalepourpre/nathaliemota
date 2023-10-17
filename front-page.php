@@ -46,7 +46,7 @@
 
     <div class="hero-banner"> 
         <img class="hero-img" src="<?php echo esc_url($image_url); ?>" alt="Image du hero">
-        <h1>PHOTOGRAPHE EVENT</H1>
+        <img class="hero-title" src="<?php echo get_template_directory_uri(); ?>/assets/images/photo-event.png" alt="Titre">
     </div>
 
     <?php endwhile;
@@ -68,6 +68,7 @@
 
 <div class="section-filtres">
 
+<div class="taxo_filtre">
     <div class="categorie-filtre">
         <form class="colonne-filtre">
             <select id="categories">
@@ -103,6 +104,7 @@
             </select>
         </form>
     </div>
+</div>
 
     <div class="date-filtre">
         <form class="colonne-filtre">
@@ -144,5 +146,7 @@
         data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
         Charger plus de photos</button>
 </div>
-
+<div class="photo-container">
+    <!-- Les images chargées seront ajoutées ici -->
+</div>
 <?php get_footer(); ?>

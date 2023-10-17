@@ -50,15 +50,22 @@
   
         // Et en cas de réussite
         if (response.data === "") {
+
+          console.log("Toutes les photos sont chargées.");
           alert("Toutes les photos sont chargées."); // Message de fin de chargement
           $(".js-load-photos").hide(); // Masque le bouton
+
         } else {
-          $(".catalogue-photo").append(response.data);
+          const nouvellesPhotos = $(response.data);
+          nouvellesPhotos.addClass("hover-img");
+          $(".photo-container").append(response.data);
           photosChargées++; // Incrémente le compteur
         }
 
       });
     });
+
+    
+
   });
 })(jQuery);
-
