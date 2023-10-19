@@ -2,7 +2,7 @@
     
     <div class="hover-img">
 
-        <img class="icon-fullscreen icon-lightbox lightbox-trigger" src="<?php echo get_template_directory_uri() .'/assets/images/Icon_fullscreen.svg';?>" alt="Icône Fullscreen"> 
+        <img class="icon-fullscreen icon-lightbox lightbox-trigger" data-photo="<?= the_post_thumbnail_url("large") ?>"  src="<?php echo get_template_directory_uri() .'/assets/images/Icon_fullscreen.svg';?>" alt="Icône Fullscreen"> 
 
         <a href="<?php echo get_permalink() ?>">
             <img class="hover-eye"  src="<?php echo get_template_directory_uri() .'/assets/images/Icon_eye.svg';?>" alt="Icône Eye">

@@ -118,7 +118,7 @@ function nathaliemota_register_post_types() {
 
 add_action( 'init', 'nathaliemota_register_post_types' );
 
-// LOAD MORE
+// AJAX LOADMORE
 function mota_my_load_more_scripts() {
 
     global $wp_query;
@@ -139,7 +139,7 @@ function mota_my_load_more_scripts() {
  
 add_action( 'wp_enqueue_scripts', 'mota_my_load_more_scripts' );
 
-// AJAX
+// LOADMORE
 
 function loadmore(){
     $photosChargées = 0; // Déclarer et initialiser le compteur
@@ -147,11 +147,13 @@ function loadmore(){
     // Récupérer les articles de type "portfolio"
     $args = array(
         'post_type' => 'portfolio', // Utilisez le nom du type de publication personnalisé
-        'posts_per_page' => -1, // Récupérer tous les articles
+        'posts_per_page' => 8, // Récupérer tous les articles
+        'paged' => 2,
+        'orderby' => 'date',
+        'order' => 'DESC',
         );
     
     $query = new WP_Query($args);
-
     // Préparer le HTML des images
     $html = '';
     if ($query->have_posts()) {
@@ -162,7 +164,8 @@ function loadmore(){
             error_log('URL de l\'image : ' . $image_url);
             $image_alt = get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true);
             // Ajouter l'image au HTML
-            $html .= '<img src="' . $image_url . '" alt="' . $image_alt . '">';
+            $taxo_categorie = get_the_terms(get_the_ID(), 'categorie-photo'); 
+            $html .= '<img class="'.$taxo_categorie.'" src="' . $image_url . '" alt="' . $image_alt . '">';
         }
     }
 
@@ -182,83 +185,3 @@ function loadmore(){
 }
 add_action('wp_ajax_loadmore', 'loadmore');
 add_action('wp_ajax_nopriv_loadmore', 'loadmore');
-
-// AJAX pour la catégorie
-
-function filter_by_category() {
-    $category = $_POST['category'];
-
-    $args = array(
-        'post_type' => 'portfolio',
-        'posts_per_page' => 12,
-        'orderby' => 'rand',
-    );
-
-    if ($category !== 'all') {
-        $args['tax_query'] = array(
-            array(
-                'taxonomy' => 'categorie-photo',
-                'field' => 'slug',
-                'terms' => $category,
-            ),
-        );
-    }
-
-    $catalogue_query = new WP_Query($args);
-
-    ob_start();
-
-    if ($catalogue_query->have_posts()) :
-        while ($catalogue_query->have_posts()) :
-            $catalogue_query->the_post();
-            get_template_part('/template-parts/photo-block');
-        endwhile;
-        wp_reset_postdata();
-    endif;
-
-    $response = ob_get_clean();
-    wp_send_json_success($response);
-}
-
-add_action('wp_ajax_filter_by_category', 'filter_by_category');
-add_action('wp_ajax_nopriv_filter_by_category', 'filter_by_category');
-
-// AJAX pour le format
-
-function filter_by_format() {
-    $format = $_POST['format'];
-
-    $args = array(
-        'post_type' => 'portfolio',
-        'posts_per_page' => 12,
-        'orderby' => 'rand',
-    );
-
-    if ($format !== 'all') {
-        $args['tax_query'] = array(
-            array(
-                'taxonomy' => 'format-photo',
-                'field' => 'slug',
-                'terms' => $format,
-            ),
-        );
-    }
-
-    $catalogue_query = new WP_Query($args);
-
-    ob_start();
-
-    if ($catalogue_query->have_posts()) :
-        while ($catalogue_query->have_posts()) :
-            $catalogue_query->the_post();
-            get_template_part('/template-parts/photo-block');
-        endwhile;
-        wp_reset_postdata();
-    endif;
-
-    $response = ob_get_clean();
-    wp_send_json_success($response);
-}
-
-add_action('wp_ajax_filter_by_format', 'filter_by_format');
-add_action('wp_ajax_nopriv_filter_by_format', 'filter_by_format');

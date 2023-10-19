@@ -56,63 +56,78 @@
 </div>
 
 <!-- CATALOGUE -->
+
 <?php
     $args = array(
     'post_type' => 'portfolio',
-    'posts_per_page' => 12,
-    'orderby' => 'rand', // Sélectionner une image aléatoire
+    'posts_per_page' => 8,
+    'orderby' => 'date',
+    'order' => 'DESC',
     );
 
     $catalogue_query = new WP_Query($args);
 ?>
 
+<!-- filtres -->
 <div class="section-filtres">
+    <!-- récupère les catégories -->
+    <?php function affichageCat($nomTaxonomie) {
+        if ($terms = get_terms(array(
+            'taxonomy' => $nomTaxonomie,
+            'orderby' => 'name'
+            ))) {
+                foreach ($terms as $term) {
+                     echo '<option class="js-filter-item" value="' . $term->slug . '">' . $term->name . '</option>';
+                }
+            }
+        }
+    ?>
 
-<div class="taxo_filtre">
-    <div class="categorie-filtre">
-        <form class="colonne-filtre">
-            <select id="categories">
-                <option value="all" hidden></option>
-                <option value="all" selected>CATÉGORIES</option>
-                <?php
-                    $categories = get_terms(array(
-                        "taxonomy" => "categorie-photo",
-                        "hide_empty" => false,
-                    ));
-                    foreach ($categories as $categorie) {
-                        echo '<option value="' . $categorie->slug . '">' . mb_convert_case($categorie->name, MB_CASE_TITLE, "UTF-8") . '</option>';
-                    }
-                ?>
-            </select>
-        </form>
+    <div class="taxo_filtre">
+        <!-- categories -->
+        <div class="filtres-cat  js-filter">
+            <form id="categories" class="js-filter-form colonne">
+                <select id="categories-select">
+                    <option value="all" hidden></option>
+                    <option value="all">Toutes les catégories</option>
+                    <?php
+                        $categories = get_terms(array(
+                            'taxonomy' => 'categorie-photo',
+                            'hide_empty' => false,
+                        ));
+                        foreach ($categories as $categorie) {
+                            echo '<option value="' . $categorie->slug . '">' . $categorie->name . '</option>';
+                        }
+                    ?>
+                </select>
+            </form>
+        </div>
+        <!-- formats -->
+        <div class="filtre-format">
+            <form id="format" class="js-filter-form  colonne">
+                <select id="format-select">
+                    <option value="all" hidden></option>
+                    <option value="all">Tous les formats</option>
+                    <?php
+                        $formats = get_terms(array(
+                            'taxonomy' => 'format-photo',
+                            'hide_empty' => false,
+                        ));
+                        foreach ($formats as $format) {
+                            echo '<option value="' . $format->slug . '">' . $format->name . '</option>';
+                        }
+                    ?>
+                </select>
+            </form>
+        </div>
     </div>
-
-    <div class="format-filtre">
-        <form class="colonne-filtre">
-            <select id="formats">
+    <!-- tri -->
+    <div class="filtre-tri">
+        <form id="ordre" class="js-filter-form colonne">
+            <select id="date-select">
                 <option value="all" hidden></option>
-                <option value="all" selected>FORMATS</option>
-                <?php
-                    $formats = get_terms(array(
-                        "taxonomy" => "format-photo",
-                        "hide_empty" => false,
-                    ));
-                    foreach ($formats as $format) {
-                        echo '<option value="' . $format->slug . '">' . mb_convert_case($format->name, MB_CASE_TITLE, "UTF-8") . '</option>';
-                    }
-                ?>
-            </select>
-        </form>
-    </div>
-</div>
-
-    <div class="date-filtre">
-        <form class="colonne-filtre">
-            <select id="dates">
-                <option value="all" hidden></option>
-                <option value="all" selected>TRIER PAR</option>
-                <option value="DESC">Les Plus Récentes</option>
-                <option value="ASC">Les Plus Anciennes</option>
+                <option value="DESC">Nouveautés</option>
+                <option value="ASC">Les plus anciennes</option>
             </select>
         </form>
     </div>
@@ -146,7 +161,18 @@
         data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
         Charger plus de photos</button>
 </div>
+<script>
+  // Récupérez la référence de votre bouton par sa classe
+  var bouton = document.querySelector('.js-load-photos');
+
+  // Ajoutez un gestionnaire d'événement au clic sur le bouton
+  bouton.addEventListener('click', function() {
+    // Cachez le bouton en utilisant display:none
+    bouton.style.display = 'none';
+  });
+</script>
 <div class="photo-container">
     <!-- Les images chargées seront ajoutées ici -->
 </div>
+
 <?php get_footer(); ?>

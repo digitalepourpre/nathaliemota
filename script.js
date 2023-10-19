@@ -61,7 +61,7 @@ var dureeTransitionPopup = 1000;
 $(document).on('click', '.lightbox-trigger', function() {
 
 // On récupére l'URL de l'image sur laquelle l'utilisateur a cliqué
-  var urlImage = $(this).attr('src');
+  var urlImage = $(this).data('photo');
   var creerImage = `<img src="${urlImage}" alt="Image agrandie">`;
   $('.lightbox__image').html(creerImage);
   transitionPopup($('.lightbox'), 1); // Affiche la lightbox avec effet de transition
@@ -72,3 +72,5 @@ $(document).on('click', '.lightbox-trigger', function() {
 btnFermetureLightbox.click(function() {
   transitionPopup($('.lightbox'), 0); // Ferme la lightbox avec effet de transition
 });
+
+// SELECT

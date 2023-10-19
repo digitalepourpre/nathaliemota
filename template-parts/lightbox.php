@@ -22,7 +22,7 @@
     </button>
 
     <div class="lightbox__image" id="lightbox-image">
-
+        <img class="photo" src="<?php echo the_post_thumbnail_url("large");?>" alt="<?php the_title_attribute(); ?>">
     </div>
 
 </div>

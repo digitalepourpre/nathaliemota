@@ -9,25 +9,21 @@ Tags: photographie
 Text Domain: nathaliemota
 */
 
-
 .menu {
   position: fixed;
   top: 0px;
-  }
+}
   
-  
-  .admin-bar .menu {
+.admin-bar .menu {
   top: 32px; /* on prend en compte le décalage */
-  }
+}
   
-  
-  body {
+body {
   max-width: 1440px;
   margin: 0 auto;
-  }
+}
   
-  
-  /***************** FONTS ***************/
+/***************** FONTS ***************/
 
 h1 {
 font-family: 'Space Mono', serif;
@@ -866,9 +862,13 @@ object-fit: cover;
 .lightbox__image {
   height: 90%;
   width: auto;
+  position: fixed;
 }
 
 .lightbox__image img {
   width: 100%;
   height: 100%;
+  position: fixed;
 }
+
+
