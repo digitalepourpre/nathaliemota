@@ -159,18 +159,17 @@
         data-nonce="<?php echo wp_create_nonce('loadmore'); ?>"
         data-action="loadmore"
         data-ajaxurl="<?php echo admin_url( 'admin-ajax.php' ); ?>">
-        Charger plus de photos</button>
+        Charger plus
+    </button>
 </div>
-<script>
-  // Récupérez la référence de votre bouton par sa classe
-  var bouton = document.querySelector('.js-load-photos');
 
-  // Ajoutez un gestionnaire d'événement au clic sur le bouton
-  bouton.addEventListener('click', function() {
-    // Cachez le bouton en utilisant display:none
-    bouton.style.display = 'none';
-  });
+<script>
+    var bouton = document.querySelector('.js-load-photos');
+    bouton.addEventListener('click', function() {
+        bouton.style.display = 'none';
+    });
 </script>
+
 <div class="photo-container">
     <!-- Les images chargées seront ajoutées ici -->
 </div>
