@@ -37,7 +37,7 @@ get_header(); ?>
     <div  class="informations-photo">
 
       	<div class="informations"> 
-			<h2><?php  echo $titre ?></h2>
+			<h2><?php  the_title(); ?></h2>
 			<p> RÉFÉRENCE :  <span class="reference-photo"><?php echo $reference ?></span></p>
 			<p> CATÉGORIE :  <?php echo $taxo_categorie[0]->name ?></p>
 			<p> FORMAT :     <?php echo $taxo_format[0]->name ?></p>
@@ -60,7 +60,7 @@ get_header(); ?>
 		
 		<div class="container-contact">
 			<p> Cette photo vous intéresse ? </p>
-			<button type="button" class="button-contact contact-link">Contact</button>
+			<button class="button-contact contact-link">Contact</button>
 		</div>
 
 		<div class="container-arrows"> 
@@ -87,7 +87,7 @@ get_header(); ?>
 
 	</div>
 	
-	<h2> VOUS AIMEREZ AUSSI</h2>
+	<h3> VOUS AIMEREZ AUSSI</h3>
 
 	<div class="container-similar-img">
 
@@ -131,5 +131,30 @@ get_header(); ?>
 </div>
 
 <?php endwhile; endif ?> 
+
+<script>
+jQuery(document).ready(function($) {
+    // Cibler le bouton "Contact" et gérer le clic
+    $(".button-contact").click(function() {
+        // Récupérer la référence de la photo actuellement affichée
+        var reference = $(".reference-photo").text();
+        
+        // Pré-remplir le champ "RÉF" du formulaire avec la référence
+        $("[name='reference']").val(reference);
+        
+        // Ouvrir la popup
+        $("#global-modal").show();
+    });
+    
+    // Fermer la popup lorsque l'utilisateur clique en dehors du contenu
+    $(document).mouseup(function(e) {
+        var modal = $("#contact-modal");
+        if (!modal.is(e.target) && modal.has(e.target).length === 0) {
+            modal.closest(".modal").hide();
+        }
+    });
+});
+</script>
+
 
 <?php get_footer() ?>

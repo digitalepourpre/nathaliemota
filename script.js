@@ -72,5 +72,3 @@ $(document).on('click', '.lightbox-trigger', function() {
 btnFermetureLightbox.click(function() {
   transitionPopup($('.lightbox'), 0); // Ferme la lightbox avec effet de transition
 });
-
-// SELECT

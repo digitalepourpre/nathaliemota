@@ -186,74 +186,76 @@ function loadmore(){
 add_action('wp_ajax_loadmore', 'loadmore');
 add_action('wp_ajax_nopriv_loadmore', 'loadmore');
 
+// FILTRES
+
 function filter_post() {
     // Récupère les catégories sélectionnées depuis la requête POST
     $cat = isset($_POST['categorie']) ? sanitize_text_field($_POST['categorie']) : '';
     $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : '';
     $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
 
+    error_log('Catégorie: ' . $cat);
+    error_log('Format: ' . $format);
+    error_log('Date: ' . $date);
+
     // Définit les arguments de la requête WP_Query
     $args = array(
         'post_type' => 'portfolio',
-        // Type de publication : "photo"
         'posts_per_page' => 8,
-        // Nombre de publications à afficher par page
         'paged' => 1,
-        // Numéro de page
-        'tax_query' => array(
-            // Requête de taxonomie pour filtrer par catégorie et format
+        'meta_key' => 'annee', // Champs ACF pour la date
+        'orderby' => 'meta_value', // Trier par valeur du champ ACF
+        'order' => ($date === 'anciens') ? 'ASC' : 'DESC',
+        'meta_query' => array(
+            array(
+                'key' => 'annee',
+                'compare' => 'EXISTS',
+            ),
+        ),
+    );
+    if ($cat !== 'all' || $format !== 'all') {
+        $args['tax_query'] = array(
+            'relation' => 'OR',
             array(
                 'taxonomy' => 'categorie-photo',
-                // Taxonomie : "categorie"
                 'field' => 'slug',
-                // Champ utilisé pour la correspondance : slug
-                'terms' => ($cat == -1 ? get_terms('categorie-photo', array('fields' => 'slugs')) : $cat) // Termes de la catégorie à filtrer
+                'terms' => ($cat !== -1 ? $cat : get_terms('categorie-photo', array('fields' => 'slugs'))),
             ),
             array(
                 'taxonomy' => 'format-photo',
-                // Taxonomie : "format"
                 'field' => 'slug',
-                // Champ utilisé pour la correspondance : slug
-                'terms' => ($format == -1 ? get_terms('format-photo', array('fields' => 'slugs')) : $format) // Termes du format à filtrer
-            )
-        ),
-        'orderby' => ($date === 'anciens') ? 'date' : 'date',
-        // Tri par date (plus ancien ou plus récent)
-        'order' => ($date === 'anciens') ? 'ASC' : 'DESC', // Tri ascendant (plus ancien) ou descendant (plus récent)
-    );
+                'terms' => ($format !== -1 ? $format : get_terms('format-photo', array('fields' => 'slugs'))),
+            ),
+        );
+    }
+
+    var_dump($args);
 
     // Effectue la requête WP_Query avec les arguments définis
     $ajaxfilter = new WP_Query($args);
+    error_log('Requête SQL: ' . $ajaxfilter->request);
+    error_log('Nombre de publications trouvées: ' . $ajaxfilter->found_posts);
 
     // Vérifie si des publications ont été trouvées
     if ($ajaxfilter->have_posts()) {
         ob_start(); // Démarre la mise en mémoire tampon
 
-        // Boucle while pour parcourir les publications
-        while ($ajaxfilter->have_posts()):
+    // Boucle while pour parcourir les publications
+     while ($ajaxfilter->have_posts()):
             $ajaxfilter->the_post();
-            // Affiche le code HTML de chaque publication
-            ?>
+    // Affiche le code HTML de chaque publication
+    ?>
 
-            <div class="nouveau_block">
-                <div class="photo_newunephoto">
-                    <?php the_content(); ?>
-                    <?php if (has_post_thumbnail()): ?>
-                        <?php the_post_thumbnail(); ?>
+    <div class="nouveau_block">
+        <div class="photo_newunephoto">
+            <?php the_content(); ?>
+            <?php if (has_post_thumbnail()): ?>
+            <?php the_post_thumbnail(); ?>
+        </div>
+        <?php endif; ?>
+    </div>
 
-                    </div>
-                <?php endif; ?>
-
-            </div>
-            </div>
-
-
-
-
-
-
-           
-            <?php
+    <?php
         endwhile;
 
         wp_reset_query(); // Réinitialise la requête
@@ -262,6 +264,7 @@ function filter_post() {
         $response = ob_get_clean(); // Récupère le contenu de la mise en mémoire tampon
     } else {
         $response = '<p>Aucun article trouvé.</p>'; // Aucune publication trouvée
+        var_dump('Aucun article trouvé.');
     }
 
     echo $response; // Affiche la réponse
