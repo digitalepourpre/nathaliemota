@@ -491,8 +491,7 @@ ul {
 }
 
 .button-contact:hover {
-  color: #ffffff;
-  background-color: #000000;
+  transform: scale(1.1, 1.2);
 }
 
 .container-arrows {
@@ -553,13 +552,12 @@ ul {
   background: #D8D8D8;
   box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
   cursor: pointer;
+  transition: transform 0.5s ease-in-out;  
 }
 
 .button-single:hover {
-  color: #ffffff;
-  background-color: #000000;
+  transform: scale(1.5, 1.5);
 }
-
 
   /* Media query pour les écrans de largeur inférieure à 768px */
 @media (max-width: 768px) {
@@ -746,7 +744,7 @@ ul {
   text-transform: uppercase;
   padding: 8px 15px 8px 15px;
   gap: 10px;
-  transition: zoom-in 0.5s ease-in-out;  
+  transition: transform 0.5s ease-in-out;  
   width: 272px;
   height: 50px;
   border: none;
@@ -759,16 +757,8 @@ ul {
   margin-top: 30px;
 }
 
-@keyframes zoom-in {
-  0% {
-    transform: scale(1, 1);
-  }
-  50% {
-    transform: scale(1.5, 1.5);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
+.js-load-photos:hover {
+  transform: scale(1.5, 1.5);  /* L'animation se déclenche au passage de la souris */
 }
 
 .photo-container img {
@@ -922,6 +912,7 @@ img.arrow-left {
   position: absolute;
   left: 0;
 }
+
 
 .photo_toutephoto {
   display: flex;

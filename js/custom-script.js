@@ -1,5 +1,3 @@
-console.log("coucou")
-
 jQuery(document).ready(function($) {
   jQuery('#categories-select, #format-select, #date-select').on('change',function(){
     var categorie = jQuery('#categories-select').val();

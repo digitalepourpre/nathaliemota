@@ -48,27 +48,68 @@ burgerMenu.addEventListener("click", () => {
 });
 
 // LIGHTBOX
-var btnFermetureLightbox = $('#close-lightbox');
-var dureeTransitionPopup = 1000; 
+$(document).ready(function() { 
 
-// Fonction pour effectuer une transition d'affichage avec une opacité donnée
+  var btnFermetureLightbox = $('#close-lightbox');
+  var btnImageSuivante = $('.contener-arrow-right');
+  var btnImagePrecedente = $('.contener-arrow-left');
+  var dureeTransitionPopup = 1000;
+  var images = [];
+  var currentIndex = 0;
+  
+  // Fonction pour effectuer une transition d'affichage avec une opacité donnée
   function transitionPopup(element, opacity) {
     $(element).css('display', opacity === 1 ? 'flex' : 'none');
     $(element).animate({ opacity: opacity }, dureeTransitionPopup);
-}
-
-// Lorsqu'on clique sur l'icone fullscreen
-$(document).on('click', '.lightbox-trigger', function() {
-
-// On récupére l'URL de l'image sur laquelle l'utilisateur a cliqué
-  var urlImage = $(this).data('photo');
-  var creerImage = `<img src="${urlImage}" alt="Image agrandie">`;
-  $('.lightbox__image').html(creerImage);
-  transitionPopup($('.lightbox'), 1); // Affiche la lightbox avec effet de transition
+  }
   
-});
+  // Lorsqu'on clique sur l'icone fullscreen
+  $(document).on('click', '.lightbox-trigger', function() {
+    var urlImage = $(this).data('photo');
+    var creerImage = `<img src="${urlImage}" alt="Image agrandie">`;
+    $('.lightbox__image').html(creerImage);
+  
+    // Remplace les attributs data-image-array et data-image-index
+    images = $('.photo').map(function() {
+      return $(this).attr('src');
+    }).get();
+    currentIndex = images.indexOf(urlImage);
+  
+    transitionPopup($('.lightbox'), 1);
+  
+    // Débogage
+    console.log('URL de l\'image :', urlImage);
+    console.log('Images :', images);
+    console.log('Indice actuel :', currentIndex);
+  });
+  
+  // Lorsqu'on clique sur le bouton de fermeture de la lightbox
+  btnFermetureLightbox.click(function() {
+      transitionPopup($('.lightbox'), 0);
+  });
+  
+  // Lorsqu'on clique sur la flèche droite
+  btnImageSuivante.click(function() {
+    if (currentIndex < images.length - 1) {
+      currentIndex++;
+      var creerImage = `<img src="${images[currentIndex]}" alt="Image agrandie">`;
+      $('.lightbox__image').html(creerImage);
+  
+      // Débogage
+      console.log('Indice après clic droit :', currentIndex);
+    }
+  });
+  
+  // Lorsqu'on clique sur la flèche gauche
+  btnImagePrecedente.click(function() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      var creerImage = `<img src="${images[currentIndex]}" alt="Image agrandie">`;
+      $('.lightbox__image').html(creerImage);
+  
+      // Débogage
+      console.log('Indice après clic gauche :', currentIndex);
+    }
+  });
 
-// Lorsqu'on clique sur le bouton de fermeture de la lightbox
-btnFermetureLightbox.click(function() {
-  transitionPopup($('.lightbox'), 0); // Ferme la lightbox avec effet de transition
 });
