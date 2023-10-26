@@ -30,9 +30,6 @@ while (have_posts()) {
     $reference = get_field('reference'); 
     $taxo_categorie = get_the_terms(get_the_ID(), 'categorie-photo');
 
-    var_dump($thumbnail_url);
-    var_dump($reference);
-    var_dump($taxo_categorie);
 
     if ($thumbnail_url) {
         $images[] = array(
@@ -57,10 +54,14 @@ while (have_posts()) {
     </div>
 
     <div class="lightbox__image" id="lightbox-image">
-        <img class="photo" src="<?php echo $images[$image_index]['url']; ?>" alt="">
+    <?php if (!empty($images)): ?>
+    <img class="photo" src="<?php echo $images[$image_index]['url']; ?>" alt="">
+<?php endif; ?>
         <div class="lightbox_content_image_infos">
             <p class="reference-photo">Référence : <?php echo $reference; ?></p>
-            <p class="category-photo">Catégorie : <?php echo $taxo_categorie[0]->name; ?></p>
+            <?php if (!empty($taxo_categorie) && is_array($taxo_categorie)): ?>
+    <p class="category-photo">Catégorie : <?php echo $taxo_categorie[0]->name; ?></p>
+<?php endif; ?>
         </div>
     </div>
 
@@ -76,10 +77,16 @@ jQuery(document).ready(function($) {
 
     // Fonction pour afficher les informations de la photo actuelle
     function afficherInformationsPhoto() {
+        if (Array.isArray(images) && images.length > 0 && image_index >= 0 && image_index < images.length && images[image_index].url) {
         var image = images[image_index];
-        $(".reference-photo").text(image.reference);
+        $(".reference-photo").text("Référence : " + image.reference);
         $(".category-photo").text("Catégorie : " + image.categorie);
+        $("#lightbox-image img.photo").attr("src", image.url);
+    } else {
+        // Gérez le cas où les données ne sont pas disponibles
     }
+}
+
 
     // Lorsque .lightbox-trigger est cliqué
     $(".lightbox-trigger").click(function() {

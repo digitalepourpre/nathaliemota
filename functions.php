@@ -124,8 +124,11 @@ function mota_my_load_more_scripts() {
     global $wp_query;
 
 	wp_enqueue_script('jquery');
+
     wp_enqueue_script('filtres', get_stylesheet_directory_uri() . '/js/custom-script.js', array('jquery') );
 	wp_register_script( 'my_loadmore', get_stylesheet_directory_uri() . '/js/loadmore.js', array('jquery') );
+    wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), '1.0', true);
+
         wp_localize_script( 'my_loadmore', 'mota_loadmore_params', array(
 		    'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
 		    'posts' => json_encode( $wp_query->query_vars ),
@@ -147,7 +150,7 @@ function loadmore(){
     // Récupérer les articles de type "portfolio"
     $args = array(
         'post_type' => 'portfolio', // Utilisez le nom du type de publication personnalisé
-        'posts_per_page' => 8, // Récupérer tous les articles
+        'posts_per_page' => 12, // Récupérer tous les articles
         'paged' => 2,
         'orderby' => 'date',
         'order' => 'DESC',
@@ -161,11 +164,22 @@ function loadmore(){
             $query->the_post();
             // Récupérer l'URL de l'image mise en avant et l'alt
             $image_url = get_the_post_thumbnail_url(get_the_ID());
-            error_log('URL de l\'image : ' . $image_url);
             $image_alt = get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true);
-            // Ajouter l'image au HTML
+            // Récupérer la référence et la catégorie de l'image
+            $reference = get_field('reference');
             $taxo_categorie = get_the_terms(get_the_ID(), 'categorie-photo'); 
-            $html .= '<img class="'.$taxo_categorie.'" src="' . $image_url . '" alt="' . $image_alt . '">';
+            // Ajouter l'image au HTML
+            $html .= '<div class="photo">';
+            $html .= '<img src="' . $image_url . '" alt="' . get_the_title() . '">';
+            $html .= '<div class="hover-img">';
+            $html .= '<img class="icon-fullscreen icon-lightbox lightbox-trigger" data-photo="' . $image_url . '" data-reference="' . $reference . '" data-categorie="' . $taxo_categorie[0]->name . '" src="' . get_template_directory_uri() . '/assets/images/Icon_fullscreen.svg" alt="Icône Fullscreen">';
+            $html .= '<a href="' . get_permalink() . '">';
+            $html .= '<img class="hover-eye" src="' . get_template_directory_uri() . '/assets/images/Icon_eye.svg" alt="Icône Eye">';
+            $html .= '</a>';
+            $html .= '<p class="titre-img">' . get_the_title() . '</p>';
+            $html .= '<p class="categorie">' . $taxo_categorie[0]->name . '</p>';
+            $html .= '</div>'; // Fermeture de la balise "hover-img"
+            $html .= '</div>'; // Fermeture de la balise "photo"
         }
     }
 
@@ -194,9 +208,6 @@ function filter_post() {
     $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : '';
     $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
 
-    error_log('Catégorie: ' . $cat);
-    error_log('Format: ' . $format);
-    error_log('Date: ' . $date);
 
     // Définit les arguments de la requête WP_Query
     $args = array(
@@ -205,7 +216,7 @@ function filter_post() {
         'paged' => 1,
         'meta_key' => 'annee', // Champs ACF pour la date
         'orderby' => 'meta_value', // Trier par valeur du champ ACF
-        'order' => ($date === 'anciens') ? 'ASC' : 'DESC',
+        'order' => ($date === 'ASC') ? 'ASC' : 'DESC',
         'meta_query' => array(
             array(
                 'key' => 'annee',
@@ -213,28 +224,31 @@ function filter_post() {
             ),
         ),
     );
-    if ($cat !== 'all' || $format !== 'all') {
-        $args['tax_query'] = array(
-            'relation' => 'OR',
-            array(
-                'taxonomy' => 'categorie-photo',
-                'field' => 'slug',
-                'terms' => ($cat !== -1 ? $cat : get_terms('categorie-photo', array('fields' => 'slugs'))),
-            ),
+    
+    $taxArray = ['relation' => 'AND'];
+    if ($format !== 'all') {
+    $taxArray[] = 
             array(
                 'taxonomy' => 'format-photo',
                 'field' => 'slug',
                 'terms' => ($format !== -1 ? $format : get_terms('format-photo', array('fields' => 'slugs'))),
-            ),
-        );
+            );
     }
-
-    var_dump($args);
+    if ($cat !== 'all') {
+        $taxArray[] =
+            array(
+                'taxonomy' => 'categorie-photo',
+                'field' => 'slug',
+                'terms' => ($cat !== -1 ? $cat : get_terms('categorie-photo', array('fields' => 'slugs'))),
+            );
+            
+    }
+    $args['tax_query'] = $taxArray;
+        
 
     // Effectue la requête WP_Query avec les arguments définis
     $ajaxfilter = new WP_Query($args);
-    error_log('Requête SQL: ' . $ajaxfilter->request);
-    error_log('Nombre de publications trouvées: ' . $ajaxfilter->found_posts);
+
 
     // Vérifie si des publications ont été trouvées
     if ($ajaxfilter->have_posts()) {
@@ -242,20 +256,17 @@ function filter_post() {
 
     // Boucle while pour parcourir les publications
      while ($ajaxfilter->have_posts()):
-            $ajaxfilter->the_post();
-    // Affiche le code HTML de chaque publication
-    ?>
+            $ajaxfilter->the_post(); 
 
-    <div class="nouveau_block">
-        <div class="photo_newunephoto">
-            <?php the_content(); ?>
-            <?php if (has_post_thumbnail()): ?>
-            <?php the_post_thumbnail(); ?>
-        </div>
-        <?php endif; ?>
-    </div>
-
-    <?php
+            if (has_post_thumbnail()):
+                $html = '<div class="nouveau_block">';
+                $html .= get_the_content();
+                $html .= '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
+                $html .= '<img class="icon-fullscreen icon-lightbox lightbox-trigger" data-photo="' . get_the_post_thumbnail_url() . '" data-reference="' . get_field('reference') . '" data-categorie="' . get_the_terms(get_the_ID(), 'categorie-photo')[0]->name . '" src="' . get_template_directory_uri() . '/assets/images/Icon_fullscreen.svg" alt="Icône Fullscreen">';
+                $html .= '<img class="hover-eye" src="' . get_template_directory_uri() . '/assets/images/Icon_eye.svg" alt="Icône Eye">';
+                $html .= '</div>';
+                echo $html;
+            endif;
         endwhile;
 
         wp_reset_query(); // Réinitialise la requête
@@ -264,7 +275,6 @@ function filter_post() {
         $response = ob_get_clean(); // Récupère le contenu de la mise en mémoire tampon
     } else {
         $response = '<p>Aucun article trouvé.</p>'; // Aucune publication trouvée
-        var_dump('Aucun article trouvé.');
     }
 
     echo $response; // Affiche la réponse

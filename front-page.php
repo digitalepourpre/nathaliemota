@@ -60,7 +60,7 @@
 <?php
     $args = array(
     'post_type' => 'portfolio',
-    'posts_per_page' => 8,
+    'posts_per_page' => 12,
     'orderby' => 'date',
     'order' => 'DESC',
     );
@@ -86,10 +86,9 @@
     <div class="taxo_filtre">
         <!-- categories -->
         <div class="filtres-cat  js-filter">
-            <label for="categories-select">CATÉGORIES</label>
             <form id="categories" class="js-filter-form colonne">
                 <select id="categories-select">
-                    <option value="all" hidden></option>
+                    <option value="all">CATÉGORIES</option>
                     <?php
                         $categories = get_terms(array(
                             'taxonomy' => 'categorie-photo',
@@ -104,10 +103,9 @@
         </div>
         <!-- formats -->
         <div class="filtre-format">
-            <label for="format-select">FORMAT</label>
             <form id="format" class="js-filter-form  colonne">
                 <select id="format-select">
-                    <option value="all" hidden></option>
+                    <option value="all">FORMAT</option>
                     <?php
                         $formats = get_terms(array(
                             'taxonomy' => 'format-photo',
@@ -123,10 +121,9 @@
     </div>
     <!-- tri -->
     <div class="filtre-tri">
-        <label for="date-select">TRIER PAR</label>
         <form id="ordre" class="js-filter-form colonne">
             <select id="date-select">
-                <option value="all" hidden></option>
+                <option value="all">TRIER PAR</option>
                 <option value="DESC">Les plus récentes</option>
                 <option value="ASC">Les plus anciennes</option>
             </select>

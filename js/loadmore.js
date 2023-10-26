@@ -20,11 +20,7 @@
         nonce: $(this).data("nonce"),
         posttype: $(this).data("posttype"),
       };
-  
-      // Pour vérifier qu'on a bien récupéré les données
-      console.log(ajaxurl);
-      console.log(data);
-  
+
       // Requête Ajax en JS natif via Fetch
       fetch(ajaxurl, {
         method: "POST",
@@ -39,7 +35,6 @@
 
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
   
         // En cas d'erreur
         if (!response.success) {
@@ -50,7 +45,6 @@
         // Et en cas de réussite
         if (response.data === "") {
 
-          console.log("Toutes les photos sont chargées.");
           alert("Toutes les photos sont chargées."); // Message de fin de chargement
           $(".js-load-photos").hide(); // Masque le bouton
 
