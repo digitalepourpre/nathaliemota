@@ -85,7 +85,7 @@
 
     <div class="taxo_filtre">
         <!-- categories -->
-        <div class="filtres-cat  js-filter">
+        <div class="js-filter">
             <form id="categories" class="js-filter-form colonne">
                 <select id="categories-select">
                     <option value="all">CATÉGORIES</option>

@@ -208,7 +208,6 @@ function filter_post() {
     $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : '';
     $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : '';
 
-
     // Définit les arguments de la requête WP_Query
     $args = array(
         'post_type' => 'portfolio',
@@ -244,11 +243,9 @@ function filter_post() {
             
     }
     $args['tax_query'] = $taxArray;
-        
 
     // Effectue la requête WP_Query avec les arguments définis
     $ajaxfilter = new WP_Query($args);
-
 
     // Vérifie si des publications ont été trouvées
     if ($ajaxfilter->have_posts()) {
@@ -262,8 +259,14 @@ function filter_post() {
                 $html = '<div class="nouveau_block">';
                 $html .= get_the_content();
                 $html .= '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
-                $html .= '<img class="icon-fullscreen icon-lightbox lightbox-trigger" data-photo="' . get_the_post_thumbnail_url() . '" data-reference="' . get_field('reference') . '" data-categorie="' . get_the_terms(get_the_ID(), 'categorie-photo')[0]->name . '" src="' . get_template_directory_uri() . '/assets/images/Icon_fullscreen.svg" alt="Icône Fullscreen">';
-                $html .= '<img class="hover-eye" src="' . get_template_directory_uri() . '/assets/images/Icon_eye.svg" alt="Icône Eye">';
+                $html .= '<div class="hover-img">';
+                $html .= '<img class="icon-fullscreen icon-lightbox lightbox-trigger svg-img" data-photo="' . get_the_post_thumbnail_url() . '" data-reference="' . get_field('reference') . '" data-categorie="' . get_the_terms(get_the_ID(), 'categorie-photo')[0]->name . '" src="' . get_template_directory_uri() . '/assets/images/Icon_fullscreen.svg" alt="Icône Fullscreen">';
+                $html .= '<a href="' . get_permalink() . '">';
+                $html .= '<img class="hover-eye svg-img" src="' . get_template_directory_uri() . '/assets/images/Icon_eye.svg" alt="Icône Eye">';
+                $html .= '</a>';
+                $html .= '<p class="titre-img">' . get_the_title() . '</p>';
+                $html .= '<p class="categorie">' . get_the_terms(get_the_ID(), 'categorie-photo')[0]->name . '</p>';
+                $html .= '</div>';
                 $html .= '</div>';
                 echo $html;
             endif;

@@ -49,7 +49,7 @@ get_header(); ?>
 			<img class ="single-photo"  src="<?php echo $photo_url ?>" alt="<?php the_title_attribute(); ?>">
 			
 			<div class="hover-img">
-				<img class="hover-fullscreen icon-lightbox" src="<?php echo get_template_directory_uri() .'/assets/images/Icon_fullscreen.svg';?>" alt="Icône d'affiche en plein écran"> 
+				<img class="hover-fullscreen icon-lightbox lightbox-trigger" src="<?php echo get_template_directory_uri() .'/assets/images/Icon_fullscreen.svg';?>" alt="Icône d'affiche en plein écran"> 
 			</div>
 
 		</div>

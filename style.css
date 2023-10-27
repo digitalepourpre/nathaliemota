@@ -680,6 +680,14 @@ ul {
     width: 317.66px; /* Largeur souhaitée pour les images */
     height: 278.8px; /* Hauteur souhaitée pour les images */
   }
+  .section-filtres, .taxo_filtre {
+    display: flex;
+    flex-direction: column;
+    gap: 10px!important;
+  }
+  .filtres-cat, .filtre-tri, .filtre-format {
+    margin-right: 0!important;
+  }
 }
 
 .wp-block-heading {
@@ -1012,7 +1020,7 @@ position: relative;
 
 select {
   font-size: 12px;
-  font-family: 'poppins';
+  font-family: 'Poppins';
   padding: 11px 18px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -1021,17 +1029,7 @@ select {
 
 select option {
   font-size: 12px;
-  font-family: 'poppins';
-}
-
-select:focus {
-  border: 1px solid var(--blues-blue-cta, #215AFF);
-  border-radius: 8px 8px 0px 0px;
-}
-
-select option:checked {
-  background-color: #FE5858;
-  color: #ffffff;
+  font-family: 'Poppins' serif;
 }
 
 .js-filter {
@@ -1045,11 +1043,65 @@ select option:checked {
 }
 
 .js-filter-item {
-  font-family: 'poppins';
+  font-family: 'Poppins' serif;
 }
 
 #categories-select,
 #format-select,
 #date-select {
-  font-family: 'poppins';
+  font-family: 'Poppins' serif;
+}
+
+/* Style du conteneur principal */
+.nouveau_block {
+  position: relative;
+  display: inline-block;
+  height: 495px; /* Hauteur de votre bloc */
+  width: 564px; /* Largeur de votre bloc */
+}
+
+/* Style de l'image à la une */
+.nouveau_block img {
+  width: 100%;
+}
+
+/* Style de l'icône "fullscreen" */
+.nouveau_block .icon-fullscreen {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px; /* Ajustez la largeur et la hauteur selon vos besoins */
+  height: 34px;
+}
+
+/* Style de l'icône "eye" */
+.nouveau_block .hover-eye {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 46px; /* Ajustez la largeur et la hauteur selon vos besoins */
+  height: 31px;
+}
+
+.nouveau_block .icon-fullscreen,
+.nouveau_block .hover-eye {
+    position: absolute;
+    opacity: 0; /* Masquer les autres éléments par défaut */
+    transition: opacity 0.3s; /* Ajouter une transition en douceur */
+}
+.nouveau_block:hover .icon-fullscreen,
+.nouveau_block:hover .hover-eye,
+.nouveau_block:hover .hover-img 
+  {
+    opacity: 1;
+}
+.nouveau_block .hover-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0; /* Masquer l'overlay par défaut */
+  transition: opacity 0.2s ease-in-out; /* Ajouter une transition en douceur */
 }

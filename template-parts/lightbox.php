@@ -65,7 +65,7 @@ while (have_posts()) {
         </div>
     </div>
 
-    <div data-image-array="<?php echo json_encode($images); ?>" data-image-index="<?php echo $image_index; ?>"></div>
+    <div data-image-array='<?php echo json_encode($images); ?>' data-image-index='<?php echo $image_index; ?>'></div>
 
 </div>
 
@@ -83,11 +83,8 @@ jQuery(document).ready(function($) {
         $(".category-photo").text("Catégorie : " + image.categorie);
         $("#lightbox-image img.photo").attr("src", image.url);
     } else {
-        // Gérez le cas où les données ne sont pas disponibles
     }
 }
-
-
     // Lorsque .lightbox-trigger est cliqué
     $(".lightbox-trigger").click(function() {
         // Mettre à jour l'indice de l'image courante
@@ -102,5 +99,21 @@ jQuery(document).ready(function($) {
 
     // Appeler la fonction pour afficher les informations de la première image
     afficherInformationsPhoto();
+    // Fonction pour gérer le bouton "Suivant"
+    $(".arrow-right").click(function() {
+        if (image_index < images.length - 1) {
+            image_index++;
+            afficherInformationsPhoto();
+        }
+    });
+
+    // Fonction pour gérer le bouton "Précédent"
+    $(".arrow-left").click(function() {
+        if (image_index > 0) {
+            image_index--;
+            afficherInformationsPhoto();
+        }
+    });
+    $("div[data-image-array], .reference-photo, .category-photo").hide();
 });
 </script>
