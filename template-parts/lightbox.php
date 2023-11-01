@@ -54,66 +54,11 @@ while (have_posts()) {
     </div>
 
     <div class="lightbox__image" id="lightbox-image">
-    <?php if (!empty($images)): ?>
-    <img class="photo" src="<?php echo $images[$image_index]['url']; ?>" alt="">
-<?php endif; ?>
-        <div class="lightbox_content_image_infos">
-            <p class="reference-photo">Référence : <?php echo $reference; ?></p>
-            <?php if (!empty($taxo_categorie) && is_array($taxo_categorie)): ?>
-    <p class="category-photo">Catégorie : <?php echo $taxo_categorie[0]->name; ?></p>
-<?php endif; ?>
-        </div>
+        <img class="photo" src="<?php echo $images[$image_index]['url']; ?>" alt="">
+        
     </div>
-
-    <div data-image-array='<?php echo json_encode($images); ?>' data-image-index='<?php echo $image_index; ?>'></div>
+<div id="reference-photo"></div>
+<div id="categorie-photo"></div>
+    <div data-image-array="<?php echo json_encode($images); ?>" data-image-index="<?php echo $image_index; ?>"></div>
 
 </div>
-
-<script>
-jQuery(document).ready(function($) {
-    // Tableau des images et indice de l'image courante
-    var images = <?php echo json_encode($images); ?>;
-    var image_index = <?php echo $image_index; ?>;
-
-    // Fonction pour afficher les informations de la photo actuelle
-    function afficherInformationsPhoto() {
-        if (Array.isArray(images) && images.length > 0 && image_index >= 0 && image_index < images.length && images[image_index].url) {
-        var image = images[image_index];
-        $(".reference-photo").text("Référence : " + image.reference);
-        $(".category-photo").text("Catégorie : " + image.categorie);
-        $("#lightbox-image img.photo").attr("src", image.url);
-    } else {
-    }
-}
-    // Lorsque .lightbox-trigger est cliqué
-    $(".lightbox-trigger").click(function() {
-        // Mettre à jour l'indice de l'image courante
-        image_index = $(this).data("image-index");
-
-        // Afficher les informations de la photo dans la lightbox
-        afficherInformationsPhoto();
-
-        // Mettre à jour l'image affichée dans la lightbox
-        $("#lightbox-image img.photo").attr("src", images[image_index].url);
-    });
-
-    // Appeler la fonction pour afficher les informations de la première image
-    afficherInformationsPhoto();
-    // Fonction pour gérer le bouton "Suivant"
-    $(".arrow-right").click(function() {
-        if (image_index < images.length - 1) {
-            image_index++;
-            afficherInformationsPhoto();
-        }
-    });
-
-    // Fonction pour gérer le bouton "Précédent"
-    $(".arrow-left").click(function() {
-        if (image_index > 0) {
-            image_index--;
-            afficherInformationsPhoto();
-        }
-    });
-    $("div[data-image-array], .reference-photo, .category-photo").hide();
-});
-</script>
