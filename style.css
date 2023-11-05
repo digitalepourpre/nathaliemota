@@ -131,7 +131,7 @@ flex-direction: column;
 padding: 0;
 text-align: center;
 padding: 2.5em;
-font-size: 1.4375em;
+font-size: 40px;
 text-transform: uppercase;
 }
 
@@ -140,7 +140,7 @@ text-transform: uppercase;
 color: white;
 font-family: 'Space Mono', serif;
 font-weight: 400;
-font-size: 2.75em;
+font-size: 40px;
 line-height: 4.0625em;
 text-transform: uppercase;
 }
@@ -1024,6 +1024,7 @@ img.arrow-left {
   bottom: 17%;
   left: 12%;
   color: white;
+  z-index: 10;
 }
 
 #categorie-photo {
@@ -1031,11 +1032,13 @@ img.arrow-left {
   bottom: 17%;
   right: 12%;
   color: white;
+  z-index: 10;
 }
 
 @media (max-width: 767px) {
   #categorie-photo, #reference-photo {
   bottom: 27%;
+  z-index: 10;
   }
 }
 

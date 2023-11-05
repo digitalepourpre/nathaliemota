@@ -3,9 +3,9 @@
 
   $(document).ready(function () {
 
-    let photosChargées = 0;
+    let photosChargées = 0; // Variable pour compter les photos chargées
 
-    // Chargment  Ajax
+    // Gestionnaire de clic sur le bouton "Charger plus de photos"
     $(".js-load-photos").click(function (e) {
 
       // Empêcher l'envoi classique du formulaire
@@ -14,7 +14,7 @@
       // L'URL qui réceptionne les requêtes Ajax dans le data
       const ajaxurl = $(this).data("ajaxurl");
   
-      // Les data du bouton
+      // Les données à envoyer dans la requête Ajax
       const data = {
         action: $(this).data("action"),
         nonce: $(this).data("nonce"),
@@ -33,12 +33,12 @@
         body: new URLSearchParams(data),
       })
 
-      .then((response) => response.json())
+      .then((response) => response.json()) // Traite la réponse comme JSON
       .then((response) => {
   
         // En cas d'erreur
         if (!response.success) {
-          alert(response.data);
+          alert(response.data); // Affiche un message d'erreur
           return;
         }
   
@@ -49,6 +49,7 @@
           $(".js-load-photos").hide(); // Masque le bouton
 
         } else {
+        // Ajoute les nouvelles photos à la page
           const nouvellesPhotos = $(response.data);
           nouvellesPhotos.addClass("hover-img");
           $(".photo-container").append(response.data);

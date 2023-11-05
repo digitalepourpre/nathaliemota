@@ -121,33 +121,35 @@ add_action( 'init', 'nathaliemota_register_post_types' );
 // AJAX LOADMORE
 function mota_my_load_more_scripts() {
 
-    global $wp_query;
+    global $wp_query; // Récupère la requête WP_Query globale
 
-	wp_enqueue_script('jquery');
-
+	wp_enqueue_script('jquery'); // Enqueue jQuery, la bibliothèque JavaScript
+    // Enqueue le script 'filtres' depuis le répertoire du thème pour gérer les filtres
     wp_enqueue_script('filtres', get_stylesheet_directory_uri() . '/js/custom-script.js', array('jquery') );
-	wp_register_script( 'my_loadmore', get_stylesheet_directory_uri() . '/js/loadmore.js', array('jquery') );
+	// Enregistre le script 'my_loadmore' pour gérer le chargement progressif
+    wp_register_script( 'my_loadmore', get_stylesheet_directory_uri() . '/js/loadmore.js', array('jquery') );
+    // Enqueue le script 'lightbox-script' pour gérer la fonctionnalité lightbox
     wp_enqueue_script('lightbox-script', get_template_directory_uri() . '/js/lightbox.js', array('jquery'), '1.0', true);
-
+    // Localise le script 'my_loadmore' pour lui fournir des paramètres et données depuis WordPress
         wp_localize_script( 'my_loadmore', 'mota_loadmore_params', array(
-		    'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
-		    'posts' => json_encode( $wp_query->query_vars ),
-		    'current_page' => get_query_var( 'paged' ) ? get_query_var('paged') : 1,
-		    'max_page' => $wp_query->max_num_pages
+		    'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // URL de l'endroit où les requêtes AJAX WordPress seront traitées
+		    'posts' => json_encode( $wp_query->query_vars ), // Les paramètres de la requête WP_Query actuelle
+		    'current_page' => get_query_var( 'paged' ) ? get_query_var('paged') : 1, // Numéro de page actuel
+		    'max_page' => $wp_query->max_num_pages // Nombre maximum de pages
 	    ) 
     );
  
- 	wp_enqueue_script( 'my_loadmore' );
+ 	wp_enqueue_script( 'my_loadmore' ); // Enqueue le script 'my_loadmore' pour le chargement progressif
 }
  
-add_action( 'wp_enqueue_scripts', 'mota_my_load_more_scripts' );
+add_action( 'wp_enqueue_scripts', 'mota_my_load_more_scripts' ); // Ajoute l'action pour charger les scripts lors du chargement de la page
 
 // LOADMORE
 
 function loadmore(){
     $photosChargées = 0; // Déclarer et initialiser le compteur
 
-    // Récupérer les articles de type "portfolio"
+    // Définit les arguments de la requête WP_Query pour récupérer les articles de type "portfolio"
     $args = array(
         'post_type' => 'portfolio', // Utilisez le nom du type de publication personnalisé
         'posts_per_page' => 12, // Récupérer tous les articles
@@ -156,8 +158,8 @@ function loadmore(){
         'order' => 'DESC',
         );
     
-    $query = new WP_Query($args);
-    // Préparer le HTML des images
+    $query = new WP_Query($args); // Effectue la requête WP_Query
+    // Prépare une variable pour stocker le HTML des images
     $html = '';
     if ($query->have_posts()) {
         while ($query->have_posts()) {
@@ -185,7 +187,7 @@ function loadmore(){
 
     wp_reset_postdata(); // Réinitialiser la requête WP_Query
 
-    // Comptez le nombre total d'articles de type "portfolio"
+    // Compte le nombre total d'articles de type "portfolio"
     $total_photos = wp_count_posts('portfolio')->publish;
 
     // Si le nombre de photos chargées est supérieur ou égal au total
@@ -197,6 +199,7 @@ function loadmore(){
 	    wp_send_json_success( $html );
     }
 }
+// Ajoute des actions pour déclencher la fonction "loadmore" en AJAX
 add_action('wp_ajax_loadmore', 'loadmore');
 add_action('wp_ajax_nopriv_loadmore', 'loadmore');
 
@@ -223,7 +226,7 @@ function filter_post() {
             ),
         ),
     );
-    
+// Crée un tableau de taxonomie pour filtrer les publications
     $taxArray = ['relation' => 'AND'];
     if ($format !== 'all') {
     $taxArray[] = 
@@ -256,6 +259,7 @@ function filter_post() {
             $ajaxfilter->the_post(); 
 
             if (has_post_thumbnail()):
+// Crée du contenu HTML pour chaque publication
                 $html = '<div class="nouveau_block">';
                 $html .= get_the_content();
                 $html .= '<img src="' . get_the_post_thumbnail_url() . '" alt="' . get_the_title() . '">';
@@ -283,6 +287,6 @@ function filter_post() {
     echo $response; // Affiche la réponse
     exit; // Termine la fonction
 }
-
+// Ajoute des actions pour déclencher la fonction "filter_post" en AJAX
 add_action('wp_ajax_filter_post', 'filter_post');
 add_action('wp_ajax_nopriv_filter_post', 'filter_post');

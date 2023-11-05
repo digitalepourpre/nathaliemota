@@ -30,7 +30,7 @@ get_header(); ?>
     $previousPost = get_previous_post();
 ?>
 
-<?php if( have_posts() ) : while( have_posts() ) : the_post(); ?>
+<?php if( have_posts() ) : while( have_posts() ) : the_post(); //boucle qui affiche le contenu de la page tant qu'il y a des articles à afficher?>
 
 <div class="container-simple">
 
